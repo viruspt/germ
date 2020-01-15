@@ -111,5 +111,9 @@
   "pre": "Pre",
   "next": "Next",
   "category": "Category",
-  "retrieval": "Retrieval"
+  "retrieval": "Retrieval",
+  "copy": "Copy",
+  "copyPasskeySuccess": "Copy passkey success",
+  "fileTypeError": "File type error",
+  "uploadTheAvatarSuccessfully": "Upload the avatar successfull"
 }

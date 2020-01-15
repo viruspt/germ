@@ -110,5 +110,9 @@
   "pre": "上一步",
   "next": "下一步",
   "category": "分类",
-  "retrieval": "检索"
+  "retrieval": "检索",
+  "copy": "复制",
+  "copyPasskeySuccess": "复制Passkey成功",
+  "fileTypeError": "文件格式错误",
+  "uploadTheAvatarSuccessfully": "上传头像成功"
 }

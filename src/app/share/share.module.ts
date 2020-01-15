@@ -29,7 +29,7 @@ import {
   NzEmptyModule,
   NzCarouselModule,
   NzAnchorModule,
-  NzTableModule, NzSelectModule, NzStepsModule, NzUploadModule, NzInputNumberModule,
+  NzTableModule, NzSelectModule, NzStepsModule, NzUploadModule, NzInputNumberModule, NzDividerModule, NzTabsModule
 } from 'ng-zorro-antd';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
@@ -90,7 +90,9 @@ import {RouterModule} from '@angular/router';
     NzSelectModule,
     NzStepsModule,
     NzUploadModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzDividerModule,
+    NzTabsModule
   ],
   exports: [
     // angular
@@ -144,7 +146,9 @@ import {RouterModule} from '@angular/router';
     NzSelectModule,
     NzStepsModule,
     NzUploadModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzDividerModule,
+    NzTabsModule
   ],
   declarations: [
     // component
