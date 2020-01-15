@@ -1,0 +1,148 @@
+<div class="release-container">
+  <app-header></app-header>
+  <div class="release-content">
+    <app-logo></app-logo>
+    <div class="release-steps">
+      <nz-steps [nzCurrent]="current">
+        <nz-step nzTitle="{{'essentialInformation' | translate}}"></nz-step>
+        <nz-step nzTitle="{{'uploadSeeds' | translate}}"></nz-step>
+        <nz-step nzTitle="{{'release' | translate}}"></nz-step>
+      </nz-steps>
+
+      <div class="release-steps-content">
+
+        <div *ngIf="current == 0" class="release-steps-info">
+
+          <div class="release-poster">
+            <div style="margin: 4px;">
+              <ng-container *ngIf="douban">
+                <img [src]="douban.image" [alt]="douban.title">
+              </ng-container>
+
+              <ng-container *ngIf="!douban && imdb">
+                <img [src]="imdb.poster" [alt]="imdb.title">
+              </ng-container>
+            </div>
+
+            <div style="margin: 4px;">
+              <ng-container *ngIf="douban">
+                <p>{{'doubanScore' | translate}}: {{douban.ratingAverage}}/10
+                  from {{douban.ratingNumRaters}}
+                  users.</p>
+                <p>{{douban.summary}}</p>
+              </ng-container>
+              <ng-container *ngIf="!douban && imdb">
+                <p>{{'imdbScore' | translate}}: {{imdb.imdbRating}}/10
+                  from {{imdb.imdbVotes}}
+                  users.</p>
+                <p>{{imdb.plot}}</p>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="release-input-id">
+            <nz-radio-group [(ngModel)]="type">
+              <label nz-radio nzValue="douban">{{'douban' | translate}}</label>
+              <label nz-radio nzValue="imdb">{{'imdb' | translate}}</label>
+            </nz-radio-group>
+
+            <nz-input-number nzPlaceHolder="Id" [(ngModel)]="currentId" [nzMin]="0" [nzMax]="9999999999" [nzStep]="1"
+                             style="width: 120px;margin-left: 4px;margin-right: 4px;"></nz-input-number>
+            <button nz-button (click)="retrieval()">{{'retrieval' | translate}}</button>
+          </div>
+
+          <div class="release-input-id">
+            <nz-select *ngIf="currentCategoryName" [(ngModel)]="currentCategoryName"
+                       (ngModelChange)="selectedCategoryNameChange($event)">
+              <nz-option nzDisabled [nzLabel]="'category' | translate"></nz-option>
+              <nz-option *ngFor="let category of configService.userConfig.categoryList" [nzValue]="category.name"
+                         [nzLabel]="category.name"></nz-option>
+            </nz-select>
+
+            <nz-select *ngIf="currentCategoryQuality.resolution" [(ngModel)]="currentCategoryResolution">
+              <nz-option nzDisabled [nzLabel]="currentCategoryQuality.resolution.name"></nz-option>
+              <nz-option *ngFor="let value of currentCategoryQuality.resolution.value" [nzValue]="value"
+                         [nzLabel]="value"></nz-option>
+            </nz-select>
+
+            <nz-select *ngIf="currentCategoryQuality.codec" [(ngModel)]="currentCategoryCodec">
+              <nz-option nzDisabled [nzLabel]="currentCategoryQuality.codec.name"></nz-option>
+              <nz-option *ngFor="let value of currentCategoryQuality.codec.value" [nzValue]="value"
+                         [nzLabel]="value"></nz-option>
+            </nz-select>
+
+            <nz-select *ngIf="currentCategoryQuality.medium" [(ngModel)]="currentCategoryMedium">
+              <nz-option nzDisabled [nzLabel]="currentCategoryQuality.medium.name"></nz-option>
+              <nz-option *ngFor="let value of currentCategoryQuality.medium.value" [nzValue]="value"
+                         [nzLabel]="value"></nz-option>
+            </nz-select>
+
+            <nz-select *ngIf="currentCategoryQuality.audio" [(ngModel)]="currentCategoryAudio">
+              <nz-option nzDisabled [nzLabel]="currentCategoryQuality.audio.name"></nz-option>
+              <nz-option *ngFor="let value of currentCategoryQuality.audio.value" [nzValue]="value"
+                         [nzLabel]="value"></nz-option>
+            </nz-select>
+          </div>
+
+          <div class="release-input-id">
+            <input style="margin: 4px" nz-input placeholder="Title" [(ngModel)]="currentTitle"/>
+
+            <input style="margin: 4px" nz-input placeholder="Subtitle" [(ngModel)]="currentSubtitle"/>
+          </div>
+
+          <div class="release-info">
+            <label class="release-info-label">
+              <textarea nz-input placeholder="input info" [(ngModel)]="info"
+                        [nzAutosize]="{ minRows: 5}"></textarea>
+            </label>
+            <markdown class="release-info-markdown" [data]="info"></markdown>
+          </div>
+        </div>
+
+        <div *ngIf="current == 1" class="release-steps-upload-torrent">
+          <button nz-button (click)="addServies()">添加系列</button>
+
+          <div *ngFor="let series of seriesArray;" style="margin: 8px">
+
+            <button nz-button (click)="removeSeries(series.id)" nzType="danger">删除系列</button>
+            <div style="display: flex;flex-direction: row">
+              <input style="flex: 1" nz-input placeholder="Series name" [ngModel]="'Series1'"
+                     (change)="changeSeriesName(series.id,$event)" required/>
+              <input style="flex: 1" nz-input placeholder="Series remarks"
+                     (change)="changeSeriesRemarks(series.id,$event)"/>
+            </div>
+
+            <nz-upload
+              [nzFileList]="seriesArray[series.id].torrentArray"
+              nzMultiple
+              [nzLimit]="2"
+              [nzFilter]="filters"
+              [nzCustomRequest]="customReq"
+            >
+              <button nz-button (click)="currentSeriesKey = series.id">
+                <i nz-icon nzType="upload"></i>
+                <span>{{'uploadSeeds' | translate}}</span>
+              </button>
+            </nz-upload>
+          </div>
+        </div>
+
+        <div *ngIf="current == 2" class="release-steps-release">
+          <markdown class="release-info-markdown" [data]="rinfo"></markdown>
+        </div>
+      </div>
+      <div class="steps-action">
+        <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+          <span>{{'pre' | translate}}</span>
+        </button>
+        <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+          <span>{{'next' | translate}}</span>
+        </button>
+        <button nz-button nzType="primary" (click)="release()" *ngIf="current === 2">
+          <span>{{'release' | translate}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

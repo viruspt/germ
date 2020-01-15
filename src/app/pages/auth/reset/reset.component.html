@@ -1,0 +1,84 @@
+<div class="reset-container">
+
+  <app-auth-header subtitle="{{'recoverPage' | translate}}"></app-auth-header>
+
+  <div class="reset-content">
+
+    <app-logo></app-logo>
+
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzRequired>{{'password' | translate}}</nz-form-label>
+        <div>
+          <nz-form-control [nzSpan]="16" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+            <input nz-input type="password" formControlName="password"/>
+            <ng-template #passwordErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{'passwordErrorTip' | translate}}
+              </ng-container>
+              <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength')">
+                {{'lengthErrorTip' | translate}}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzRequired>{{'passwordConfirm' | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="16" nzHasFeedback [nzErrorTip]="passwordConfirmErrorTpl">
+          <input nz-input type="password" formControlName="confirm"/>
+          <ng-template #passwordConfirmErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              {{'passwordConfirmErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">
+              {{'passwordInconsistentErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength')">
+              {{'lengthErrorTip' | translate}}
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="captchaErrorTpl">
+          <img class="reset-captcha" src="{{captchaImageUrl}}" alt="{{'captcha' | translate}}"
+               nz-tooltip nzTooltipTitle="{{'clickRefreshCaptcha' | translate}}" nzTooltipPlacement="right"
+               (click)="changeCaptcha()">
+          <input type="text" nz-input formControlName="captcha" placeholder="{{'captcha' | translate}}"/>
+          <ng-template #captchaErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              {{'captchaErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength')">
+              {{'captchaLengthErrorTip' | translate}}
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button [hidden]="loading" nz-button class="reset-form-button "
+                  [nzType]="'primary'"
+                  [disabled]="!validateForm.valid">{{'resetPassword' | translate}}</button>
+
+          <div [hidden]="!loading" class="reset-loading">
+            <nz-spin>
+              <nz-alert
+                nzType="info"
+                nzMessage="{{'resetting' | translate}}">
+              </nz-alert>
+            </nz-spin>
+          </div>
+
+          {{'or' | translate}}
+          <a [routerLink]="'/auth/login'">{{'loginNow' | translate}}</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <app-footer></app-footer>
+</div>

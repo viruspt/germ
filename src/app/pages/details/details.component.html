@@ -1,0 +1,54 @@
+<div class="details-container">
+  <app-header></app-header>
+  <div class='details-content'>
+    <app-logo></app-logo>
+    <div *ngIf="currentPost">
+      <div class="details-poster">
+        <div style="margin: 4px;">
+          <ng-container *ngIf="douban">
+            <img [src]="douban.image" [alt]="douban.title">
+          </ng-container>
+
+          <ng-container *ngIf="!douban && imdb">
+            <img [src]="imdb.poster" [alt]="imdb.title">
+          </ng-container>
+        </div>
+
+        <div style="margin: 4px;">
+          <ng-container *ngIf="douban">
+            <p>标题: {{douban.title}}
+            <p>别名: {{douban.altTitle}}
+            <p>
+              <a [href]="'https://movie.douban.com/subject/'+douban.doubanId"
+                 target="_blank">豆瓣ID: {{douban.doubanId}}</a>
+            </p>
+            <p>类型: {{douban.movieType}}
+            <p>时间: {{douban.movieDuration}}
+            <p>上映时间: {{douban.pubdate}}
+            <p>国家: {{douban.country}}
+            <p>语言: {{douban.language}}
+            <p>作者: {{douban.author}}
+            <p>演员: {{douban.cast}}
+            <p>标签: <nz-tag>{{douban.tags}}</nz-tag>
+            <p>年份: {{douban.year}}
+            <p>writer: {{douban.writer}}
+            <p>主页: {{douban.website}}
+            <p>{{'doubanScore' | translate}}: {{douban.ratingAverage}}/10
+              from {{douban.ratingNumRaters}}
+              users.</p>
+            <p>{{douban.summary}}</p>
+          </ng-container>
+          <ng-container *ngIf="!douban && imdb">
+            <p>{{'imdbScore' | translate}}: {{imdb.imdbRating}}/10
+              from {{imdb.imdbVotes}}
+              users.</p>
+            <p>{{imdb.plot}}</p>
+          </ng-container>
+        </div>
+      </div>
+
+      <markdown [data]="currentPost.content"></markdown>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

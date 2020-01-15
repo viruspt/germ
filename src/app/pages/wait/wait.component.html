@@ -1,0 +1,132 @@
+<div class="wait-container">
+  <app-header></app-header>
+  <div class="wait-content">
+    <app-logo></app-logo>
+    <div class="wait-table-container">
+      <div *ngIf="waitConfig">
+        <p>候选规则：</p>
+        <p>
+          1. 当发布了
+          <nz-tag>{{waitConfig.passWaitLen}}</nz-tag>
+          个种子后直接通过
+        </p>
+        <p>
+          2.
+          <nz-tag>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</nz-tag>
+          则直接通过
+        </p>
+        <p>
+          3. 如果在
+          <nz-tag>{{waitConfig.waitTime}}秒</nz-tag>
+          内没有得到
+          <nz-tag>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</nz-tag>
+          的票数，那么这个种子将会被删除
+        </p>
+      </div>
+      <nz-table
+        class="wait-table"
+        #ajaxTable
+        nzShowSizeChanger
+        nzPaginationPosition="both"
+        [nzFrontPagination]="false"
+        [nzData]="listOfData"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)"
+        [nzScroll]="{ x: '1080px' }"
+      >
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzShowExpand></th>
+          <th>{{'operation' | translate}}</th>
+          <th>{{'ticket' | translate}}</th>
+          <th>{{'roofPlacement' | translate}}</th>
+          <th>{{'type' | translate}}</th>
+          <th nzShowSort nzSortKey="title">{{'title' | translate}}</th>
+          <th nzShowSort nzSortKey="created"><span>{{'publishedIn' | translate}}</span></th>
+          <th><span>{{'lastUpdate' | translate}}</span></th>
+          <th nzShowSort nzSortKey="uid"><span>{{'author' | translate}}</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-template ngFor let-data [ngForOf]="ajaxTable.data" let-i="index">
+          <tr>
+            <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+            <td>
+              <button nz-button nzType="primary"
+                      [disabled]="!waitData || waitData.waitList[i] == 0  || waitData.waitList[i] == 1"
+                      (click)="agree(data.id, true)">
+                {{'agree' | translate}}
+              </button>
+
+              <button nz-button nzType="danger"
+                      [disabled]="!waitData || waitData.waitList[i] == 0 || waitData.waitList[i] == 1"
+                      (click)="agree(data.id, false)">
+                {{'disagree' | translate}}
+              </button>
+            </td>
+            <td>
+              <nz-tag nzColor="green">{{!waitData || waitData.countList[i].agree}}</nz-tag>
+              <nz-tag nzColor="red">{{!waitData || waitData.countList[i].disagree}}</nz-tag>
+            </td>
+            <td>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-pin'"
+                 *ngFor="let n of (data.pin | numberToArray)"></i>
+            </td>
+            <td>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-dianying'" *ngIf="data.categoryName == 'movie'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-music_icon'" *ngIf="data.categoryName == 'music'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-book'" *ngIf="data.categoryName == 'book'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-icon-test'" *ngIf="data.categoryName == 'study'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-youxi'" *ngIf="data.categoryName == 'game'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-ruanjian1'"
+                 *ngIf="data.categoryName == 'software'"></i>
+            </td>
+            <td>
+              <h4>{{data.title}}</h4>
+              <p>{{data.subtitle | textLen}}</p>
+            </td>
+            <td>{{ data.created | datetime}}</td>
+            <td>{{ data.modify | datetime}}</td>
+            <td>
+              <button nz-button nzType="default">
+                {{ data.username | textLen}}
+              </button>
+            </td>
+          </tr>
+          <tr [nzExpand]="mapOfExpandData[data.id]">
+            <td></td>
+            <td colSpan="3">
+              <ng-container *ngIf="data.douban">
+                <img [src]="data.douban.image" [alt]="data.douban.title">
+              </ng-container>
+              <ng-container *ngIf="!data.douban && data.imdb">
+                <img [src]="data.imdb.poster" [alt]="data.imdb.title">
+              </ng-container>
+            </td>
+
+            <td colspan="6">
+              <ng-container *ngIf="data.douban">
+                <p>{{'doubanScore' | translate}}: {{data.douban.ratingAverage}}/10
+                  from {{data.douban.ratingNumRaters}}
+                  users.</p>
+                <p>{{data.douban.summary}}</p>
+              </ng-container>
+              <ng-container *ngIf="!data.douban && data.imdb">
+                <p>{{'imdbScore' | translate}}: {{data.imdb.imdbRating}}/10
+                  from {{data.imdb.imdbVotes}}
+                  users.</p>
+                <p>{{data.imdb.plot}}</p>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

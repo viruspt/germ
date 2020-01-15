@@ -1,0 +1,88 @@
+<div class="login-container">
+
+  <app-auth-header subtitle="{{'loginPage' | translate}}"></app-auth-header>
+
+  <div class="login-content">
+
+    <app-logo></app-logo>
+
+    <nz-spin *ngIf="!configService.globalConfig ||
+     configService.globalConfig && configService.globalConfig.loginState === false" nzSimple
+             [nzSize]="'large'"></nz-spin>
+
+    <form *ngIf="configService.globalConfig && configService.globalConfig.loginState === true" nz-form
+          [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="emailErrorTpl">
+          <nz-input-group nzPrefixIcon="mail">
+            <input type="email" nz-input formControlName="email" placeholder="{{'email' | translate}}"/>
+            <ng-template #emailErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('email')">
+                {{'emailValidErrorTip' | translate}}
+              </ng-container>
+              <ng-container *ngIf="control.hasError('required')">
+                {{'emailErrorTip' | translate}}
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="{{'password' | translate}}"/>
+            <ng-template #passwordErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{'passwordErrorTip' | translate}}
+              </ng-container>
+              <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength')">
+                {{'lengthErrorTip' | translate}}
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="captchaErrorTpl">
+          <img class="login-captcha" src="{{captchaImageUrl}}" alt="{{'captcha' | translate}}"
+               nz-tooltip nzTooltipTitle="{{'clickRefreshCaptcha' | translate}}" nzTooltipPlacement="right"
+               (click)="changeCaptcha()">
+          <input type="text" nz-input formControlName="captcha" placeholder="{{'captcha' | translate}}"/>
+          <ng-template #captchaErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required') || control.hasError('maxlength')">
+              {{'captchaErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              {{'captchaLengthErrorTip' | translate}}
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="remember">
+            <span>{{'rememberMe' | translate}}</span>
+          </label>
+          <a class="login-form-forgot" [routerLink]="'/auth/recover'">{{'forgotPassword'|translate}}</a>
+          <button [hidden]="loading" nz-button class="login-form-button"
+                  [nzType]="'primary'" [disabled]="!validateForm.valid">{{'logIn' | translate}}</button>
+
+          <div [hidden]="!loading" class="login-loading">
+            <nz-spin>
+              <nz-alert
+                nzType="info"
+                nzMessage="{{'logging' | translate}}">
+              </nz-alert>
+            </nz-spin>
+          </div>
+
+          {{'or' | translate}}
+          <a [routerLink]="'/auth/register'">{{'registerNow' | translate}}</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <app-footer></app-footer>
+</div>

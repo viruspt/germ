@@ -1,0 +1,16 @@
+<nz-page-header class="auth-header" nzTitle="{{'appTitle' | translate}}" [nzSubtitle]="subtitle">
+  <nz-page-header-extra>
+    <i nz-icon [nzIconfont]="'icon-yuyanfanyi'" nz-dropdown [nzDropdownMenu]="languageMenu"
+       style="font-size: 24px !important;"></i>
+    <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+      <ul nz-menu nzSelectable>
+        <li nz-menu-item (click)="changeLang('zh')">
+          <span role="img" aria-label="简体中文">🇨🇳</span> 简体中文
+        </li>
+        <li nz-menu-item (click)="changeLang('en')">
+          <span role="img" aria-label="English">🇺🇸</span> English
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </nz-page-header-extra>
+</nz-page-header>

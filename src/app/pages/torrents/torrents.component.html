@@ -1,0 +1,161 @@
+<div class="torrents-container">
+  <app-header></app-header>
+  <div class="torrents-content">
+    <app-logo></app-logo>
+    <div class="torrents-table-container">
+      <nz-table
+        class="torrents-table"
+        #ajaxTable
+        nzShowSizeChanger
+        nzPaginationPosition="both"
+        [nzFrontPagination]="false"
+        [nzData]="listOfData"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        (nzPageIndexChange)="searchData(categoryName)"
+        (nzPageSizeChange)="searchData(categoryName, true)"
+        [nzScroll]="{ x: '1080px' }"
+      >
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzShowExpand></th>
+          <th>{{'roofPlacement' | translate}}</th>
+          <th>{{'type' | translate}}</th>
+          <th nzShowSort nzSortKey="title">{{'title' | translate}}</th>
+          <th nzShowSort nzSortKey="size"><span>{{'size' | translate}}</span></th>
+          <th><span>{{'upload' | translate}}</span></th>
+          <th><span>{{'download' | translate}}</span></th>
+          <th><span>{{'complete' | translate}}</span></th>
+          <th nzShowSort nzSortKey="created"><span>{{'publishedIn' | translate}}</span></th>
+          <th nzShowSort nzSortKey="uid"><span>{{'author' | translate}}</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-template ngFor let-data [ngForOf]="ajaxTable.data" let-i="index">
+          <tr>
+            <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+            <td>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-pin'"
+                 *ngFor="let n of (data.pin | numberToArray)"></i>
+            </td>
+            <td>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-dianying'" *ngIf="data.categoryName == 'Movie'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-music_icon'" *ngIf="data.categoryName == 'Music'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-book'" *ngIf="data.categoryName == 'Book'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-icon-test'" *ngIf="data.categoryName == 'Study'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-youxi'" *ngIf="data.categoryName == 'Game'"></i>
+              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-ruanjian1'"
+                 *ngIf="data.categoryName == 'Software'"></i>
+            </td>
+            <td>
+              <h4>{{data.title}}</h4>
+              <p>{{data.subtitle | textLen}}</p>
+            </td>
+            <td>
+              <nz-tag>
+                {{getPeerCount(i, 'size') | byte}}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getPeerCount(i, 'upload') | tagColor:'peer'">
+                {{getPeerCount(i, 'upload')}}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getPeerCount(i, 'download') | tagColor:'peer'">
+                {{getPeerCount(i, 'download')}}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getPeerCount(i, 'complete') | tagColor:'peer'">
+                {{getPeerCount(i, 'complete')}}
+              </nz-tag>
+            </td>
+            <td>{{ data.created | datetime}}</td>
+            <td>
+              <button nz-button nzType="default">
+                {{ data.username | textLen}}
+              </button>
+            </td>
+          </tr>
+          <tr [nzExpand]="mapOfExpandData[data.id]">
+            <td></td>
+            <td colSpan="3">
+              <ng-container *ngIf="data.douban">
+                <img [src]="data.douban.image" [alt]="data.douban.title">
+              </ng-container>
+              <ng-container *ngIf="!data.douban && data.imdb">
+                <img [src]="data.imdb.poster" [alt]="data.imdb.title">
+              </ng-container>
+            </td>
+
+            <td colspan="7">
+              <ng-container *ngIf="data.douban">
+                <p>{{'doubanScore' | translate}}: {{data.douban.ratingAverage}}/10
+                  from {{data.douban.ratingNumRaters}}
+                  users.</p>
+                <p>{{data.douban.summary}}</p>
+              </ng-container>
+              <ng-container *ngIf="!data.douban && data.imdb">
+                <p>{{'imdbScore' | translate}}: {{data.imdb.imdbRating}}/10
+                  from {{data.imdb.imdbVotes}}
+                  users.</p>
+                <p>{{data.imdb.plot}}</p>
+              </ng-container>
+
+              <div *ngFor="let series of data.seriesList">
+                <li nz-menu-divider></li>
+                <nz-tag nz-tooltip nzTooltipTitle="series id">
+                  {{series.id}}
+                </nz-tag>
+                <nz-tag nzColor="green" nz-tooltip nzTooltipTitle="series name">
+                  {{series.name}}
+                </nz-tag>
+                <nz-tag *ngIf="series.remarks" nzColor="blue" nz-tooltip nzTooltipTitle="series remarks">
+                  {{series.remarks}}
+                </nz-tag>
+                <div *ngIf="series.torrentList">
+                  <div *ngFor="let torrent of series.torrentList.slice(0,10)">
+                    <li nz-menu-divider></li>
+                    <button nz-button nzType="primary"
+                            nz-dropdown [nzDropdownMenu]="torrentMenu">
+                      {{torrent.fileName}}
+                    </button>
+                    <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
+                      <ul nz-menu>
+                        <li nz-menu-item nzDisabled>
+                          {{'torrentSize' | translate}}: {{torrent.fileSize | byte}}
+                        </li>
+                        <li nz-menu-divider></li>
+                        <li nz-menu-item (click)="downloadTorrent(torrent.id)">
+                          <i nz-icon nzType="download" nzTheme="outline"></i>
+                          {{'download' | translate}}
+                        </li>
+                      </ul>
+                    </nz-dropdown-menu>
+                    <p>{{'size' | translate}}: {{torrent.size | byte}}</p>
+                    <p>{{'discount' | translate}}: U{{torrent.discount.upload * 100}}%
+                      | D{{torrent.discount.download * 100}}%
+                      | S{{torrent.discount.seed * 100}}%</p>
+                    <p>{{'upload' | translate}}: {{torrent.uploadCount}}
+                      | {{'download' | translate}}: {{torrent.downloadCount}}
+                      | {{'complete' | translate}}: {{torrent.completeCount}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <li nz-menu-divider></li>
+              <button nz-button nzType="primary" [routerLink]="'/details'"
+                      [queryParams]="{id: data.id}">{{'seeMore' | translate}}</button>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

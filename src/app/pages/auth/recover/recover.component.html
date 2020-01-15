@@ -1,0 +1,64 @@
+<div class="recover-container">
+
+  <app-auth-header subtitle="{{'recoverPage' | translate}}"></app-auth-header>
+
+  <div class="recover-content">
+
+    <app-logo></app-logo>
+
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzRequired>{{'email' | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="16" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+          <input nz-input formControlName="email" type="email"/>
+          <ng-template #emailErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('email')">
+              {{'emailValidErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              {{'emailErrorTip' | translate}}
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="captchaErrorTpl">
+          <img class="recover-captcha" src="{{captchaImageUrl}}" alt="{{'captcha' | translate}}"
+               nz-tooltip nzTooltipTitle="{{'clickRefreshCaptcha' | translate}}" nzTooltipPlacement="right"
+               (click)="changeCaptcha()">
+          <input type="text" nz-input formControlName="captcha" placeholder="{{'captcha' | translate}}"/>
+          <ng-template #captchaErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              {{'captchaErrorTip' | translate}}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength')">
+              {{'captchaLengthErrorTip' | translate}}
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button [hidden]="loading" nz-button class="recover-form-button "
+                  [nzType]="'primary'"
+                  [disabled]="!validateForm.valid">{{'sendRecoverPasswordEmail' | translate}}</button>
+
+          <div [hidden]="!loading" class="recover-loading">
+            <nz-spin>
+              <nz-alert
+                nzType="info"
+                nzMessage="{{'recovering' | translate}}">
+              </nz-alert>
+            </nz-spin>
+          </div>
+
+          {{'or' | translate}}
+          <a [routerLink]="'/auth/login'">{{'loginNow' | translate}}</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <app-footer></app-footer>
+</div>

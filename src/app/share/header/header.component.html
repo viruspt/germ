@@ -1,0 +1,116 @@
+<nz-header style="padding: 0px;width: 100%;z-index: 2;">
+  <div class="global-header">
+    <div class="global-header-index-action-hover" style="display: inline-flex;">
+      <div class="global-header-index-action" [routerLink]="'/index'">
+        <i nz-icon [nzIconfont]="'icon-home'"></i>
+      </div>
+    </div>
+
+    <div class="global-header-index-action-hover" style="display: inline-flex;">
+      <div class="global-header-index-action" nz-dropdown [nzDropdownMenu]="torrentMenu">
+        <i nz-icon [nzIconfont]="'icon-bullbasaur'"></i>
+      </div>
+    </div>
+    <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item [routerLink]="'/torrents'">
+          <i nz-icon [nzIconfont]="'icon-quanbu'"></i>
+          {{'all' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Movie'}">
+          <i nz-icon [nzIconfont]="'icon-movie'"></i>
+          {{'movie' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Music'}">
+          <i nz-icon [nzIconfont]="'icon-musicnote'"></i>
+          {{'music' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Book'}">
+          <i nz-icon [nzIconfont]="'icon-book1'"></i>
+          {{'book' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Study'}">
+          <i nz-icon [nzIconfont]="'icon-xuexi'"></i>
+          {{'study' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Game'}">
+          <i nz-icon [nzIconfont]="'icon-game'"></i>
+          {{'game' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Software'}">
+          <i nz-icon [nzIconfont]="'icon-ruanjian'"></i>
+          {{'software' | translate}}
+        </li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item [routerLink]="'/release'">
+          <i nz-icon [nzIconfont]="'icon-fabu'"></i>
+          {{'release' | translate}}
+        </li>
+        <li nz-menu-item [routerLink]="'/waiting'">
+          <i nz-icon [nzIconfont]="'icon-dengdai'"></i>
+          {{'wait' | translate}}
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <div class="global-header-index-action-hover global-header-index-right">
+      <div class="global-header-index-action"
+           nz-dropdown [nzDropdownMenu]="helpMenu">
+        <i nz-icon [nzIconfont]="'icon-bangzhuzhongxin'"></i>
+      </div>
+      <nz-dropdown-menu #helpMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item [routerLink]="'/faq'">
+            <i nz-icon nzType="question" nzTheme="outline"></i>
+            {{'question' | translate}}
+          </li>
+          <li nz-menu-item (click)="showTestMessage()">
+            <i nz-icon nzType="book" nzTheme="outline"></i>
+            {{'rule' | translate}}
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+
+      <div class="global-header-index-action"
+           nz-dropdown [nzDropdownMenu]="userMenu">
+        <nz-avatar *ngIf="userService.user.avatarUrl" [nzSrc]="userService.user.avatarUrl"></nz-avatar>
+        <nz-avatar *ngIf="!userService.user.avatarUrl" [nzText]="userService.user.username.substring(0,1)"
+                   nzSize="large" [ngStyle]="{ 'background-color': '#f56a00' }"
+                   style="vertical-align: middle;"></nz-avatar>
+        <span class="global-header-avatar-username">{{userService.user.username}}</span>
+      </div>
+      <nz-dropdown-menu #userMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item [routerLink]="'/user/details'">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            {{'personalCenter' | translate}}
+          </li>
+          <li nz-menu-item (click)="showTestMessage()">
+            <i nz-icon nzType="setting" nzTheme="outline"></i>
+            {{'personalSetting' | translate}}
+          </li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="logout()">
+            <i nz-icon nzType="logout" nzTheme="outline"></i>
+            {{'logout' | translate}}
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+
+      <div class="global-header-index-action"
+           nz-dropdown [nzDropdownMenu]="languageMenu">
+        <i class="iconfont" nz-icon [nzIconfont]="'icon-yuyanfanyi'"></i>
+      </div>
+      <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item (click)="changeLang('zh')">
+            <span role="img" aria-label="简体中文">🇨🇳</span> 简体中文
+          </li>
+          <li nz-menu-item (click)="changeLang('en')">
+            <span role="img" aria-label="English">🇺🇸</span> English
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </div>
+</nz-header>

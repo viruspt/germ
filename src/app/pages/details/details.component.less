@@ -1,0 +1,42 @@
+.index-container {
+  width: 100%;
+  height: 100%;
+  background: #f0f2f5 url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.details-poster {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 720px) {
+  .details-content {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .details-anchor {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .details-content {
+    display: flex;
+    padding: 16px;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .details-anchor {
+    padding: 16px;
+  }
+}
+
+
