@@ -1,13 +1,16 @@
 <div class="faq-container">
   <app-header></app-header>
-  <div class='faq-content'>
-    <markdown src="assets/static/wiki/faq.md" (load)="onLoadComplete($event)"></markdown>
+  <app-logo></app-logo>
+  <nz-content>
+    <nz-card class="faq-card" id="faq-card">
+      <markdown src="assets/static/wiki/faq.md" (load)="onLoadComplete($event)"></markdown>
+    </nz-card>
     <nz-anchor class="faq-anchor">
       <nz-link nzHref="#用户信息" nzTitle="{{'userInfo' | translate}}"></nz-link>
       <nz-link nzHref="#数据统计" nzTitle="{{'dataStatistics' | translate}}"></nz-link>
       <nz-link nzHref="#发布" nzTitle="{{'release' | translate}}"></nz-link>
       <nz-link nzHref="#下载" nzTitle="{{'download' | translate}}"></nz-link>
     </nz-anchor>
-  </div>
+  </nz-content>
   <app-footer></app-footer>
 </div>

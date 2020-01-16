@@ -85,7 +85,8 @@
                 <div class="hot-img-container">
                   <img class="hot-img"
                        src="https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2574029074.jpg" alt="">
-                  <button class="hot-img-more" nz-button nzType="primary">{{'seeMore' | translate}}</button>
+                  <button class="hot-img-more" nz-button nzType="primary"
+                          [routerLink]="'/torrent/detail'" [queryParams]="{id: 56}">{{'seeMore' | translate}}</button>
                 </div>
                 <div class="hot-douban">
                   <nz-tag [nzColor]="'green'">

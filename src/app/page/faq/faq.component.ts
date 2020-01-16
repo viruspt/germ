@@ -14,11 +14,12 @@ export class FaqComponent implements OnInit {
   }
 
   onLoadComplete($event: string) {
-    if (document.body.clientWidth < 720) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < document.images.length; i++) {
-        const image = document.images.item(i);
-        image.width = document.body.offsetWidth - 32;
+    const cardWidth = document.getElementById('faq-card').offsetWidth;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < document.images.length; i++) {
+      const image = document.images.item(i);
+      if (image.width > cardWidth - 32) {
+        image.width = cardWidth - 32;
       }
     }
   }

@@ -16,7 +16,7 @@
           <div class="setting-title">{{'torrentSetting' | translate}}</div>
 
           <div class="setting-item-content">
-            <div class="setting-item-text">种子单页显示数量:</div>
+            <div class="setting-item-text">种子<span nz-text><code>单页</code></span>显示数量:</div>
             <nz-select [(ngModel)]="selectedTorrentListPageSize" (ngModelChange)="torrentListPageSizeChange($event)">
               <nz-option *ngFor="let p of TorrentListPageSizeData" [nzValue]="p" [nzLabel]="p + '条/页'"></nz-option>
             </nz-select>

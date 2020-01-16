@@ -60,6 +60,7 @@
   "upload": "上传",
   "downloaded": "下载量",
   "download": "下载",
+  "downloadTorrent": "下载种子",
   "seed": "做种",
   "complete": "完成",
   "release": "发布",
@@ -116,5 +117,7 @@
   "copy": "复制",
   "copyPasskeySuccess": "复制Passkey成功",
   "fileTypeError": "文件格式错误",
-  "uploadTheAvatarSuccessfully": "上传头像成功"
+  "uploadTheAvatarSuccessfully": "上传头像成功",
+  "created": "创建于",
+  "modified": "更新于"
 }

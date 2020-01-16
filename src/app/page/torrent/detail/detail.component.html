@@ -1,0 +1,121 @@
+<div class="detail-container">
+  <app-header></app-header>
+  <nz-content>
+    <app-logo></app-logo>
+    <div *ngIf="currentPost" class="detail-content">
+      <nz-card class="detail-card" id="detail-card">
+        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <div><span nz-text><strong>{{currentPost.title}}</strong></span></div>
+          <span nz-text>{{currentPost.subtitle}}</span>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="detail-title">系列信息</div>
+        <div>
+          <div *ngFor="let series of currentPost.seriesList">
+            <nz-tag nz-tooltip nzTooltipTitle="series id">
+              {{series.id}}
+            </nz-tag>
+            <nz-tag nzColor="green" nz-tooltip nzTooltipTitle="series name">
+              {{series.name}}
+            </nz-tag>
+            <nz-tag *ngIf="series.remarks" nzColor="blue" nz-tooltip nzTooltipTitle="series remarks">
+              {{series.remarks}}
+            </nz-tag>
+            <div *ngIf="series.torrentList">
+              <div *ngFor="let torrent of series.torrentList">
+                <nz-divider></nz-divider>
+                <div>
+                  <span nz-text><strong>{{torrent.fileName}}</strong></span>
+                </div>
+                <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="torrentMenu">
+                  {{'downloadTorrent' | translate}}
+                </button>
+                <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li nz-menu-item nzDisabled>
+                      {{'torrentSize' | translate}}: {{torrent.fileSize | byte}}
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item (click)="downloadTorrent(torrent.id)">
+                      <i nz-icon nzType="download" nzTheme="outline"></i>
+                      {{'download' | translate}}
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+                <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
+                <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.upload * 100}}
+                  %</code> | <code>D{{torrent.discount.download * 100}}%</code> | <code>S{{torrent.discount.seed * 100}}
+                  %</code></span>
+                <span nz-text>{{'upload' | translate}}: <nz-tag
+                  [nzColor]="torrent.uploadCount | tagColor:'peer'">{{torrent.uploadCount}}</nz-tag> | {{'download' | translate}}
+                  : <nz-tag
+                    [nzColor]="torrent.downloadCount | tagColor:'peer'">{{torrent.downloadCount}}</nz-tag> | {{'complete' | translate}}
+                  : <nz-tag [nzColor]="torrent.completeCount | tagColor:'peer'">{{torrent.completeCount}}</nz-tag>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="detail-title">豆瓣信息</div>
+        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="6">
+          <div class="detail-poster-content">
+            <ng-container *ngIf="douban">
+              <img [src]="douban.image" [alt]="douban.title">
+            </ng-container>
+
+            <ng-container *ngIf="!douban && imdb">
+              <img [src]="imdb.poster" [alt]="imdb.title">
+            </ng-container>
+          </div>
+        </div>
+        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="18">
+          <div class="detail-info-content">
+            <ng-container *ngIf="douban">
+              <p>{{'title' | translate}}: <span nz-text><code>{{douban.title}}</code></span>
+              <p>别名: <span nz-text><strong>{{douban.altTitle}}</strong></span>
+              <p>
+                <a [href]="'https://douban.com/subject/'+douban.doubanId"
+                   target="_blank">{{'douban' | translate}}ID: {{douban.doubanId}}</a>
+              </p>
+              <p>{{'type' | translate}}: {{douban.movieType}}
+              <p>时间: {{douban.movieDuration}}
+              <p>上映时间: {{douban.pubdate}}
+              <p>国家: {{douban.country}}
+              <p>语言: {{douban.language}}
+              <p>作者: {{douban.author}}
+              <p>演员: {{douban.cast}}
+              <p>标签:
+                <span nz-text><code>{{douban.tags}}</code></span>
+              <p>年份: {{douban.year}}
+              <p>writer: {{douban.writer}}
+              <p>主页: {{douban.website}}
+              <p>{{'doubanScore' | translate}}: <span nz-text><code>{{douban.ratingAverage}}/10
+                from {{douban.ratingNumRaters}}
+                users</code></span>.</p>
+              <p>{{douban.summary}}</p>
+            </ng-container>
+            <ng-container *ngIf="!douban && imdb">
+              <p>{{'imdbScore' | translate}}: <span nz-text><code>{{imdb.imdbRating}}/10
+                from {{imdb.imdbVotes}}
+                users</code></span>.</p>
+              <p>{{imdb.plot}}</p>
+            </ng-container>
+          </div>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="detail-title">简介</div>
+        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <markdown [data]="currentPost.content"></markdown>
+        </div>
+      </nz-card>
+    </div>
+    <div *ngIf="!currentPost">
+      <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+    </div>
+  </nz-content>
+  <app-footer></app-footer>
+</div>
+<ng-template #empty>
+  <nz-empty [nzNotFoundContent]="'noData' | translate"></nz-empty>
+</ng-template>

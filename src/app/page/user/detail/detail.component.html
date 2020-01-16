@@ -9,60 +9,55 @@
             <div *ngIf="currentUser.avatarUrl" class="detail-avatar-content">
               <nz-avatar class="detail-avatar" [nzSize]="104"
                          [nzSrc]="currentUser.avatarUrl"></nz-avatar>
-              <nz-upload *ngIf="!isShowFriend"
-                         [nzFilter]="filters"
-                         [nzCustomRequest]="customReq"
-              >
-                <button nz-button nzType="dashed">
-                  <i nz-icon nzType="upload"></i>
-                  <span>{{'upload' | translate}}</span>
-                </button>
-              </nz-upload>
             </div>
             <div *ngIf="!currentUser.avatarUrl" class="detail-avatar-content">
               <nz-avatar class="detail-avatar" [nzSize]="104"
                          [nzText]="currentUser.username.substring(0,1)"
                          [ngStyle]="{ 'background-color': '#f56a00' }"
                          style="vertical-align: middle;"></nz-avatar>
-              <nz-upload *ngIf="!isShowFriend"
-                         [nzShowUploadList]="false"
-                         [nzFilter]="filters"
-                         [nzCustomRequest]="customReq"
-              >
-                <button nz-button nzType="dashed">
-                  <i nz-icon nzType="upload"></i>
-                  <span>{{'upload' | translate}}</span>
-                </button>
-              </nz-upload>
             </div>
             <div class="detail-account-username">
               {{currentUser.username}}
-              <i *ngIf="!currentUser.sex" nz-icon nzType="man" nzTheme="outline"></i>
-              <i *ngIf="currentUser.sex" nz-icon nzType="woman" nzTheme="outline"></i>
+              <i *ngIf="!currentUser.sex" nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
+              <i *ngIf="currentUser.sex" nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
             </div>
+            <nz-upload *ngIf="!isShowFriend"
+                       [nzFilter]="filters"
+                       [nzCustomRequest]="customReq">
+              <button nz-button nzType="dashed">
+                <i nz-icon nzType="upload"></i>
+                <span>{{'upload' | translate}}</span>
+              </button>
+            </nz-upload>
           </div>
           <nz-divider></nz-divider>
           <div>
             <div class="detail-account-title">{{'personalInfo' | translate}}</div>
-            <p>
+            <p nz-tooltip nzTooltipTitle="id">
               <i class="detail-account-info-icon" nz-icon nzType="idcard" nzTheme="outline"></i>
-              {{currentUser.uid}}
+              <span nz-text><code>{{currentUser.uid}}</code></span>
             </p>
-            <p *ngIf="!isShowFriend">
+            <p *ngIf="!isShowFriend" nz-tooltip nzTooltipTitle="{{'email' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="mail" nzTheme="outline"></i>
-              {{currentUser.email}}
+              <span nz-text><code>{{currentUser.email}}</code></span>
             </p>
-            <p *ngIf="!isShowFriend">
+            <p *ngIf="!isShowFriend" nz-tooltip nzTooltipTitle="passkey">
               <i class="detail-account-info-icon" nz-icon nzType="key" nzTheme="outline"></i>
               <button nz-button nzType="dashed" (click)="copyPasskey()">{{'copy' | translate}}</button>
             </p>
-            <div *ngIf="!isShowFriend" style="display: flex">
-              <p class="detail-account-info-icon">IP</p>
-              {{currentUser.ip}}
-            </div>
-            <p>
+            <p *ngIf="!isShowFriend" nz-tooltip nzTooltipTitle="ip">
+              <i class="detail-account-info-icon" nz-icon nzType="environment" nzTheme="outline"></i>
+              <span nz-text nzDisabled>{{currentUser.ip}}</span>
+            </p>
+            <p nz-tooltip nzTooltipTitle="{{'created' | translate}}">
+              <i class="detail-account-info-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
+              <span nz-text nzDisabled>{{currentUser.created | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+              <span nz-text><code>{{currentUser.created | datetime}}</code></span>
+            </p>
+            <p nz-tooltip nzTooltipTitle="{{'modified' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="history" nzTheme="outline"></i>
-              {{currentUser.created | date: 'yyyy-dd-MM HH:mm:ss'}}
+              <span nz-text nzDisabled>{{currentUser.modify | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+              <span nz-text><code>{{currentUser.modify | datetime}}</code></span>
             </p>
           </div>
           <nz-divider></nz-divider>

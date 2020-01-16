@@ -60,6 +60,7 @@
   "upload": "Upload",
   "downloaded": "Downloaded",
   "download": "Download",
+  "downloadTorrent": "Download torrent",
   "seed": "Seed",
   "complete": "Complete",
   "release": "Release",
@@ -117,5 +118,7 @@
   "copy": "Copy",
   "copyPasskeySuccess": "Copy passkey success",
   "fileTypeError": "File type error",
-  "uploadTheAvatarSuccessfully": "Upload the avatar successfull"
+  "uploadTheAvatarSuccessfully": "Upload the avatar successfully",
+  "created": "Created",
+  "modified": "Modified"
 }
