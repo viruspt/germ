@@ -34,7 +34,7 @@ export class TorrentListComponent implements OnInit {
   // 包含了上传下载完成人数以及大小的数据
   peerCountData = [];
 
-  noSeed: string;
+  noSeedTip: string;
 
   constructor(private translateService: TranslateService, private routeInfo: ActivatedRoute,
               private messageService: NzMessageService, private modalService: NzModalService,
@@ -59,7 +59,7 @@ export class TorrentListComponent implements OnInit {
       this.searchData(name, true);
     });
     this.translateService.get('noSeed').subscribe((res: string) => {
-      this.noSeed = res;
+      this.noSeedTip = res;
     });
   }
 
@@ -96,20 +96,13 @@ export class TorrentListComponent implements OnInit {
     }
   }
 
-  downloadTorrent(id: number) {
-    this.torrentService.download(id, this.userService.user.token).subscribe(result => {
-      const link = document.createElement('a');
-      const blob = new Blob([result.body], {type: 'application/x-bittorrent'});
-      link.setAttribute('href', window.URL.createObjectURL(blob));
-      const fileName = result.headers.get('Content-Disposition').split('filename=')[1];
-      link.setAttribute('download', decodeURI(fileName).replace(/"/g, ''));
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }, error1 => {
-      createErrorConfirm(this.modalService, this.noSeed);
-    });
+  downloadTorrent(tid: number) {
+    const ret = this;
+    // tslint:disable-next-line:only-arrow-functions
+    const callback = function(error) {
+      createErrorConfirm(ret.modalService, ret.noSeedTip);
+    };
+    this.torrentService.downloadTorrent(tid, this.userService.user.token, callback);
   }
 
   sort($event: { key: string; value: string }) {

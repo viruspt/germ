@@ -32,9 +32,9 @@ export function createConfirm(modalService: NzModalService, tplTitle: string, tp
 }
 
 export function createSuccessConfirm(modalService: NzModalService, tplContent: any, okCallback?: any) {
-  createConfirm(modalService, 'success', tplContent, okCallback);
+  createConfirm(modalService, 'Success', tplContent, okCallback);
 }
 
 export function createErrorConfirm(modalService: NzModalService, tplContent: any, okCallback?: any) {
-  createConfirm(modalService, 'error', tplContent, okCallback);
+  createConfirm(modalService, 'Error', tplContent, okCallback);
 }

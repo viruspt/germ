@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {createErrorConfirm} from '../util/modal.util';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,22 @@ export class TorrentService {
     return this.http.get(url, {
       responseType: 'arraybuffer',
       observe: 'response'
+    });
+  }
+
+  downloadTorrent(tid: number, token: string, error: any) {
+    this.download(tid, token).subscribe(result => {
+      const link = document.createElement('a');
+      const blob = new Blob([result.body], {type: 'application/x-bittorrent'});
+      link.setAttribute('href', window.URL.createObjectURL(blob));
+      const fileName = result.headers.get('Content-Disposition').split('filename=')[1];
+      link.setAttribute('download', decodeURI(fileName).replace(/"/g, ''));
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, error1 => {
+      error(error1);
     });
   }
 }

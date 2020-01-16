@@ -78,7 +78,7 @@ export class TorrentReleaseComponent implements OnInit {
       // tslint:disable-next-line:no-non-null-assertion
       item.onError!(error1, item.file!);
     });
-  }
+  };
 
   constructor(private translateService: TranslateService, private router: Router,
               private messageService: NzMessageService, private modalService: NzModalService,
@@ -88,6 +88,7 @@ export class TorrentReleaseComponent implements OnInit {
 
   ngOnInit() {
     this.selectCategoryQuality(0);
+    this.addSeries();
   }
 
   pre(): void {
@@ -230,16 +231,24 @@ export class TorrentReleaseComponent implements OnInit {
     }
   }
 
-  removeSeries(id: number) {
-    for (const key in this.seriesArray) {
-      if (this.seriesArray[key].id === id) {
-        // @ts-ignore
-        this.seriesArray.splice(key, 1);
-      }
-    }
-  }
+  // removeSeries(id: number) {
+  //   const ret = this;
+  //   // tslint:disable-next-line:only-arrow-functions
+  //   createConfirm(this.modalService, 'Warning', 'Do you want to delete?', function() {
+  //     ret.removeSeriesById(id);
+  //   });
+  // }
+  //
+  // private removeSeriesById(id: number) {
+  //   for (const key in this.seriesArray) {
+  //     if (this.seriesArray[key].id === id) {
+  //       // @ts-ignore
+  //       this.seriesArray.splice(key, 1);
+  //     }
+  //   }
+  // }
 
-  addServies() {
+  addSeries() {
     if (this.seriesArray.length > 0) {
       this.seriesArray.push({id: this.seriesArray[this.seriesArray.length - 1].id + 1, torrentArray: []});
     } else {

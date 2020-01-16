@@ -12,6 +12,7 @@ import {ShareModule} from '../share/share.module';
 import {AuthGuardService} from '../service/auth.guard.service';
 import {IndexGuardService} from '../service/index.guard.service';
 import {MarkdownModule} from 'ngx-markdown';
+import {UnsavedGuard} from '../service/unsaved.guard.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     Page404Component,
   ],
-  providers: [AuthGuardService, IndexGuardService,
+  providers: [AuthGuardService, IndexGuardService, UnsavedGuard,
     {
       provide: NZ_I18N,
       useValue: zh_CN

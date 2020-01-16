@@ -3,6 +3,10 @@
   <nz-content>
     <app-logo></app-logo>
     <div *ngIf="currentPost">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <h1>{{currentPost.title}}</h1>
+        <h6>{{currentPost.subtitle}}</h6>
+      </div>
       <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <div class="detail-poster-content">
           <ng-container *ngIf="douban">

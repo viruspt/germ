@@ -1,6 +1,6 @@
 <div class="release-container">
   <app-header></app-header>
-  <div class="release-content">
+  <nz-content>
     <app-logo></app-logo>
     <div class="release-steps">
       <nz-steps [nzCurrent]="current">
@@ -100,30 +100,28 @@
         </div>
 
         <div *ngIf="current == 1" class="release-steps-upload-torrent">
-          <button nz-button (click)="addServies()">添加系列</button>
+          <!--          <button nz-button (click)="addSeries()">添加系列</button>-->
 
           <div *ngFor="let series of seriesArray;" style="margin: 8px">
-
-            <button nz-button (click)="removeSeries(series.id)" nzType="danger">删除系列</button>
             <div style="display: flex;flex-direction: row">
               <input style="flex: 1" nz-input placeholder="Series name" [ngModel]="'Series1'"
                      (change)="changeSeriesName(series.id,$event)" required/>
               <input style="flex: 1" nz-input placeholder="Series remarks"
                      (change)="changeSeriesRemarks(series.id,$event)"/>
+              <nz-upload
+                [nzFileList]="seriesArray[series.id] && seriesArray[series.id].torrentArray"
+                nzMultiple
+                [nzLimit]="2"
+                [nzFilter]="filters"
+                [nzCustomRequest]="customReq"
+              >
+                <button nz-button (click)="currentSeriesKey = series.id">
+                  <i nz-icon nzType="upload"></i>
+                  <span>{{'uploadSeeds' | translate}}</span>
+                </button>
+              </nz-upload>
+              <!--              <button nz-button (click)="removeSeries(series.id)" nzType="danger">删除系列</button>-->
             </div>
-
-            <nz-upload
-              [nzFileList]="seriesArray[series.id].torrentArray"
-              nzMultiple
-              [nzLimit]="2"
-              [nzFilter]="filters"
-              [nzCustomRequest]="customReq"
-            >
-              <button nz-button (click)="currentSeriesKey = series.id">
-                <i nz-icon nzType="upload"></i>
-                <span>{{'uploadSeeds' | translate}}</span>
-              </button>
-            </nz-upload>
           </div>
         </div>
 
@@ -143,6 +141,6 @@
         </button>
       </div>
     </div>
-  </div>
+  </nz-content>
   <app-footer></app-footer>
 </div>
