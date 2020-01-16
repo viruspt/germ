@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {PostService} from '../../service/post.service';
-import {Post} from '../../model/post';
-import {UserService} from '../../service/user.service';
-import {createErrorMessage} from '../../util/message.util';
+import {PostService} from '../../../service/post.service';
+import {Post} from '../../../model/post';
+import {UserService} from '../../../service/user.service';
+import {createErrorMessage} from '../../../util/message.util';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TranslateService} from '@ngx-translate/core';
-import {WaitService} from '../../service/wait.service';
-import {WaitData} from '../../model/wait.data';
-import {WaitConfig} from '../../model/wait.config';
+import {WaitService} from '../../../service/wait.service';
+import {WaitData} from '../../../model/wait.data';
+import {WaitConfig} from '../../../model/wait.config';
 
 @Component({
   selector: 'app-torrents',
   templateUrl: './wait.component.html',
   styleUrls: ['./wait.component.less'],
 })
-export class WaitComponent implements OnInit {
+export class TorrentWaitComponent implements OnInit {
   categoryName = 'wait';
   sortKey: string = null;
   sortValue = true;

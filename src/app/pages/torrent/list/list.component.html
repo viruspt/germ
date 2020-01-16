@@ -1,10 +1,10 @@
-<div class="torrents-container">
+<div class="list-container">
   <app-header></app-header>
-  <div class="torrents-content">
+  <div class="list-content">
     <app-logo></app-logo>
-    <div class="torrents-table-container">
+    <div class="list-table-container">
       <nz-table
-        class="torrents-table"
+        class="list-table"
         #ajaxTable
         nzShowSizeChanger
         nzPaginationPosition="both"
@@ -37,16 +37,16 @@
           <tr>
             <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
             <td>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-pin'"
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-pin'"
                  *ngFor="let n of (data.pin | numberToArray)"></i>
             </td>
             <td>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-dianying'" *ngIf="data.categoryName == 'Movie'"></i>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-music_icon'" *ngIf="data.categoryName == 'Music'"></i>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-book'" *ngIf="data.categoryName == 'Book'"></i>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-icon-test'" *ngIf="data.categoryName == 'Study'"></i>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-youxi'" *ngIf="data.categoryName == 'Game'"></i>
-              <i class="torrent-icon" nz-icon [nzIconfont]="'icon-ruanjian1'"
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-dianying'" *ngIf="data.categoryName == 'Movie'"></i>
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-music_icon'" *ngIf="data.categoryName == 'Music'"></i>
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-book'" *ngIf="data.categoryName == 'Book'"></i>
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-icon-test'" *ngIf="data.categoryName == 'Study'"></i>
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-youxi'" *ngIf="data.categoryName == 'Game'"></i>
+              <i class="list-icon" nz-icon [nzIconfont]="'icon-ruanjian1'"
                  *ngIf="data.categoryName == 'Software'"></i>
             </td>
             <td>
@@ -75,7 +75,7 @@
             </td>
             <td>{{ data.created | datetime}}</td>
             <td>
-              <button nz-button nzType="default">
+              <button nz-button nzType="default" [routerLink]="'/user/detail'" [queryParams]="{id: data.uid}">
                 {{ data.username | textLen}}
               </button>
             </td>
@@ -102,6 +102,7 @@
                 <p>{{'imdbScore' | translate}}: {{data.imdb.imdbRating}}/10
                   from {{data.imdb.imdbVotes}}
                   users.</p>
+                <p>{{data.imdb.plot}}</p>
                 <p>{{data.imdb.plot}}</p>
               </ng-container>
 
@@ -148,7 +149,7 @@
               </div>
 
               <li nz-menu-divider></li>
-              <button nz-button nzType="primary" [routerLink]="'/details'"
+              <button nz-button nzType="primary" [routerLink]="'/torrent/detail'"
                       [queryParams]="{id: data.id}">{{'seeMore' | translate}}</button>
             </td>
           </tr>

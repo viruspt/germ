@@ -1,11 +1,13 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {DetailsComponent} from './details/details.component';
+import {UserDetailComponent} from './detail/detail.component';
 import {IndexGuardService} from '../../service/index.guard.service';
+import {UserSettingComponent} from './setting/setting.component';
 
 const routes: Routes = [
-  {path: '', component: DetailsComponent, canActivate: [IndexGuardService]},
-  {path: 'details', component: DetailsComponent, canActivate: [IndexGuardService]},
+  {path: '', component: UserDetailComponent, canActivate: [IndexGuardService]},
+  {path: 'detail', component: UserDetailComponent, canActivate: [IndexGuardService]},
+  {path: 'setting', component: UserSettingComponent, canActivate: [IndexGuardService]},
 ];
 
 @NgModule({

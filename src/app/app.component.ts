@@ -10,7 +10,7 @@ import {ConfigKey, getLanguage, getObj, getUser, removeUser, saveLanguage, saveO
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   constructor(public translate: TranslateService,
               private router: Router,
               public userService: UserService, public configService: ConfigService) {

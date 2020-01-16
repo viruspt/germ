@@ -4,6 +4,7 @@ export const ConfigKey = 'config';
 export const UserKey = 'currentUser';
 export const LanguageKey = 'currentLanguage';
 export const ThemeKey = 'currentTheme';
+export const TorrentListPageSize = 'currentTorrentListPageSize';
 
 export function saveObj(key: string, data: any): void {
   localStorage.setItem(key, JSON.stringify(data));

@@ -40,8 +40,8 @@ export class UserService {
   /**
    * 获取其他用户信息
    */
-  getFriend(userId: number): Observable<User> {
-    const url = `${this.config.baseUrl}/user/user/${userId}`;
+  getUserById(userId: number): Observable<User> {
+    const url = `${this.config.baseUrl}/user/${userId}`;
     return this.http.get<User>(url, {
       headers: {
         token: this.user.token

@@ -1,0 +1,113 @@
+<div class="detail-container">
+  <app-header></app-header>
+  <nz-content>
+    <app-logo></app-logo>
+    <div *ngIf="currentUser">
+      <div nz-col nzXs="24" nzSm="6" nzMd="6" nzLg="6" nzXl="6">
+        <nz-card class="detail-card">
+          <div class="detail-account-head-content">
+            <div *ngIf="currentUser.avatarUrl" class="detail-avatar-content">
+              <nz-avatar class="detail-avatar" [nzSize]="104"
+                         [nzSrc]="currentUser.avatarUrl"></nz-avatar>
+              <nz-upload *ngIf="!isShowFriend"
+                         [nzFilter]="filters"
+                         [nzCustomRequest]="customReq"
+              >
+                <button nz-button nzType="dashed">
+                  <i nz-icon nzType="upload"></i>
+                  <span>{{'upload' | translate}}</span>
+                </button>
+              </nz-upload>
+            </div>
+            <div *ngIf="!currentUser.avatarUrl" class="detail-avatar-content">
+              <nz-avatar class="detail-avatar" [nzSize]="104"
+                         [nzText]="currentUser.username.substring(0,1)"
+                         [ngStyle]="{ 'background-color': '#f56a00' }"
+                         style="vertical-align: middle;"></nz-avatar>
+              <nz-upload *ngIf="!isShowFriend"
+                         [nzShowUploadList]="false"
+                         [nzFilter]="filters"
+                         [nzCustomRequest]="customReq"
+              >
+                <button nz-button nzType="dashed">
+                  <i nz-icon nzType="upload"></i>
+                  <span>{{'upload' | translate}}</span>
+                </button>
+              </nz-upload>
+            </div>
+            <div class="detail-account-username">
+              {{currentUser.username}}
+              <i *ngIf="!currentUser.sex" nz-icon nzType="man" nzTheme="outline"></i>
+              <i *ngIf="currentUser.sex" nz-icon nzType="woman" nzTheme="outline"></i>
+            </div>
+          </div>
+          <nz-divider></nz-divider>
+          <div>
+            <div class="detail-account-title">{{'personalInfo' | translate}}</div>
+            <p>
+              <i class="detail-account-info-icon" nz-icon nzType="idcard" nzTheme="outline"></i>
+              {{currentUser.uid}}
+            </p>
+            <p *ngIf="!isShowFriend">
+              <i class="detail-account-info-icon" nz-icon nzType="mail" nzTheme="outline"></i>
+              {{currentUser.email}}
+            </p>
+            <p *ngIf="!isShowFriend">
+              <i class="detail-account-info-icon" nz-icon nzType="key" nzTheme="outline"></i>
+              <button nz-button nzType="dashed" (click)="copyPasskey()">{{'copy' | translate}}</button>
+            </p>
+            <div *ngIf="!isShowFriend" style="display: flex">
+              <p class="detail-account-info-icon">IP</p>
+              {{currentUser.ip}}
+            </div>
+            <p>
+              <i class="detail-account-info-icon" nz-icon nzType="history" nzTheme="outline"></i>
+              {{currentUser.created | date: 'yyyy-dd-MM HH:mm:ss'}}
+            </p>
+          </div>
+          <nz-divider></nz-divider>
+          <div>
+            <div class="detail-account-title">{{'personalData' | translate}}</div>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="(currentUser.uploaded | rate: currentUser.downloaded) | tagColor:'rate'">{{'rate' | translate}}
+              : {{currentUser.uploaded | rate: currentUser.downloaded}}</nz-tag>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="currentUser.uploaded | tagColor">{{'uploaded' | translate}}
+              : {{currentUser.uploaded | byte}}</nz-tag>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="currentUser.downloaded | tagColor">{{'downloaded' | translate}}
+              : {{currentUser.downloaded | byte}}</nz-tag>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="'cyan'">{{'exp' | translate}}: {{currentUser.exp}}</nz-tag>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="'gold'">{{'gold' | translate}}: {{currentUser.gold}}</nz-tag>
+            <nz-tag class="detail-account-data-tag"
+                    [nzColor]="'purple'">{{'diamond' | translate}}: {{currentUser.diamond}}</nz-tag>
+          </div>
+        </nz-card>
+      </div>
+      <div nz-col nzXs="24" nzSm="18" nzMd="18" nzLg="18" nzXl="18">
+        <nz-card class="detail-card">
+          <nz-tabset>
+            <nz-tab [nzTitle]="'release' | translate">
+              <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+            </nz-tab>
+            <nz-tab [nzTitle]="'upload' | translate">
+              <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+            </nz-tab>
+            <nz-tab [nzTitle]="'download' | translate">
+              <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+            </nz-tab>
+            <nz-tab [nzTitle]="'seed' | translate">
+              <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+            </nz-tab>
+          </nz-tabset>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+  <app-footer></app-footer>
+</div>
+<ng-template #empty>
+  <nz-empty [nzNotFoundContent]="'noData' | translate"></nz-empty>
+</ng-template>

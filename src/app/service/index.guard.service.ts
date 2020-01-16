@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {getUser} from '../util/app.util';
+import {getUser, removeUser} from '../util/app.util';
 import {UserService} from './user.service';
 
 @Injectable()
@@ -15,6 +15,7 @@ export class IndexGuardService implements CanActivate {
     if (this.userService.user) {
       return true;
     } else {
+      removeUser();
       // 没有授权跳转到登录页面
       this.router.navigate(['/auth/login']);
       return false;

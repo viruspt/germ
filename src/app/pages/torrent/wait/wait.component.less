@@ -1,4 +1,4 @@
-.torrents-container {
+.wait-container {
   width: 100%;
   height: 100%;
   background: #f0f2f5 url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
@@ -7,17 +7,21 @@
   flex-direction: column;
 }
 
-.torrents-table-container {
+nz-content {
+  padding: 0 16px;
+  margin-top: 16px;
+  flex: 1;
+}
+
+.wait-table-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.torrents-table {
+.wait-table {
   width: 80%;
-}
-
-.torrents-content {
-  flex: 1;
 }
 
 .torrent-icon {
@@ -25,13 +29,13 @@
 }
 
 @media (max-width: 960px) {
-  .torrents-table {
+  .wait-table {
     width: 90%;
   }
 }
 
 @media (max-width: 720px) {
-  .torrents-table {
+  .wait-table {
     width: 100%;
   }
 }

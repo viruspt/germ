@@ -107,6 +107,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.userSignedButton.removeAttribute('hidden');
       }
     }, error1 => {
+      console.log(error1);
       createErrorMessage(this.messageService, error1);
     });
   }

@@ -1,23 +1,24 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {PostService} from '../../service/post.service';
-import {Post} from '../../model/post';
-import {UserService} from '../../service/user.service';
-import {createErrorMessage} from '../../util/message.util';
+import {PostService} from '../../../service/post.service';
+import {Post} from '../../../model/post';
+import {UserService} from '../../../service/user.service';
+import {createErrorMessage} from '../../../util/message.util';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {TorrentService} from '../../service/torrent.service';
+import {TorrentService} from '../../../service/torrent.service';
 import {TranslateService} from '@ngx-translate/core';
-import {createErrorConfirm} from '../../util/modal.util';
-import {ConfigService} from '../../service/config.service';
+import {createErrorConfirm} from '../../../util/modal.util';
+import {ConfigService} from '../../../service/config.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {Series} from '../../model/series';
-import {Torrent} from '../../model/torrent';
+import {Series} from '../../../model/series';
+import {Torrent} from '../../../model/torrent';
+import {getObj, saveObj, TorrentListPageSize} from '../../../util/app.util';
 
 @Component({
   selector: 'app-torrents',
-  templateUrl: './torrents.component.html',
-  styleUrls: ['./torrents.component.less'],
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.less'],
 })
-export class TorrentsComponent implements OnInit {
+export class TorrentListComponent implements OnInit {
   categoryNameChangeEvent$ = new EventEmitter<any>();
   categoryName: string;
   sortKey: string = null;
@@ -25,7 +26,7 @@ export class TorrentsComponent implements OnInit {
 
   loading = true;
   pageIndex = 1;
-  pageSize = 10;
+  pageSize: number;
   total = 1;
   mapOfExpandData: { [key: string]: boolean } = {};
   // 所有数据
@@ -42,6 +43,10 @@ export class TorrentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageSize = getObj(TorrentListPageSize);
+    if (!this.pageSize) {
+      this.pageSize = 10;
+    }
     this.routeInfo.queryParams.subscribe((params: Params) => {
       this.categoryNameChangeEvent$.emit(params.name);
     });
@@ -64,6 +69,7 @@ export class TorrentsComponent implements OnInit {
       this.pageIndex = 1;
     }
     this.loading = true;
+    saveObj(TorrentListPageSize, this.pageSize);
     this.postService.list(this.userService.user.token, this.pageIndex, this.pageSize, categoryName, this.sortKey, this.sortValue, false)
       .subscribe((postList: Post[]) => {
         this.listOfData = postList;

@@ -1,0 +1,31 @@
+<div class="setting-container">
+  <app-header></app-header>
+  <nz-content>
+    <app-logo></app-logo>
+    <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <nz-card class="setting-card">
+        <div>
+          <div class="setting-title">{{'personalSetting' | translate}}</div>
+          <nz-card-meta [nzTitle]="empty"></nz-card-meta>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <nz-card class="setting-card">
+        <div>
+          <div class="setting-title">{{'torrentSetting' | translate}}</div>
+
+          <div class="setting-item-content">
+            <div class="setting-item-text">种子单页显示数量:</div>
+            <nz-select [(ngModel)]="selectedTorrentListPageSize" (ngModelChange)="torrentListPageSizeChange($event)">
+              <nz-option *ngFor="let p of TorrentListPageSizeData" [nzValue]="p" [nzLabel]="p + '条/页'"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </nz-content>
+</div>
+<ng-template #empty>
+  <nz-empty [nzNotFoundContent]="'noData' | translate"></nz-empty>
+</ng-template>

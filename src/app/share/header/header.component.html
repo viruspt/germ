@@ -13,40 +13,40 @@
     </div>
     <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item [routerLink]="'/torrents'">
+        <li nz-menu-item [routerLink]="'/torrent'">
           <i nz-icon [nzIconfont]="'icon-quanbu'"></i>
           {{'all' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Movie'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Movie'}">
           <i nz-icon [nzIconfont]="'icon-movie'"></i>
           {{'movie' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Music'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Music'}">
           <i nz-icon [nzIconfont]="'icon-musicnote'"></i>
           {{'music' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Book'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Book'}">
           <i nz-icon [nzIconfont]="'icon-book1'"></i>
           {{'book' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Study'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Study'}">
           <i nz-icon [nzIconfont]="'icon-xuexi'"></i>
           {{'study' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Game'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Game'}">
           <i nz-icon [nzIconfont]="'icon-game'"></i>
           {{'game' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/torrents'" [queryParams]="{name: 'Software'}">
+        <li nz-menu-item [routerLink]="'/torrent'" [queryParams]="{name: 'Software'}">
           <i nz-icon [nzIconfont]="'icon-ruanjian'"></i>
           {{'software' | translate}}
         </li>
         <li nz-menu-divider></li>
-        <li nz-menu-item [routerLink]="'/release'">
+        <li nz-menu-item [routerLink]="'/torrent/release'">
           <i nz-icon [nzIconfont]="'icon-fabu'"></i>
           {{'release' | translate}}
         </li>
-        <li nz-menu-item [routerLink]="'/waiting'">
+        <li nz-menu-item [routerLink]="'/torrent/wait'">
           <i nz-icon [nzIconfont]="'icon-dengdai'"></i>
           {{'wait' | translate}}
         </li>
@@ -71,7 +71,7 @@
         </ul>
       </nz-dropdown-menu>
 
-      <div class="global-header-index-action"
+      <div *ngIf="userService.user" class="global-header-index-action"
            nz-dropdown [nzDropdownMenu]="userMenu">
         <nz-avatar *ngIf="userService.user.avatarUrl" [nzSrc]="userService.user.avatarUrl"></nz-avatar>
         <nz-avatar *ngIf="!userService.user.avatarUrl" [nzText]="userService.user.username.substring(0,1)"
@@ -81,11 +81,11 @@
       </div>
       <nz-dropdown-menu #userMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item [routerLink]="'/user/details'">
+          <li nz-menu-item [routerLink]="'/user/detail'">
             <i nz-icon nzType="user" nzTheme="outline"></i>
             {{'personalCenter' | translate}}
           </li>
-          <li nz-menu-item (click)="showTestMessage()">
+          <li nz-menu-item [routerLink]="'/user/setting'">
             <i nz-icon nzType="setting" nzTheme="outline"></i>
             {{'personalSetting' | translate}}
           </li>

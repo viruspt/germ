@@ -93,7 +93,8 @@
                   </nz-tag>
                   <p>
                     夏天、阳光，沙滩、海浪，青年消防员雏罂粟港和爱好冲浪的向水日菜子相遇并迅速展开热恋。看似命中注定的这对恋人，却不幸遭遇生死别离。无法接受港已经离世的雏子，某天突然发现，只要唱起属于两个人的那首歌，港就会从水中出现……</p>
-                  <button nz-button nzType="primary" (click)="seeMoreClick(index)">{{'seeMore' | translate}}</button>
+                  <button nz-button nzType="primary"
+                          [routerLink]="'/torrent/detail'" [queryParams]="{id: 56}">{{'seeMore' | translate}}</button>
                 </div>
               </div>
             </div>

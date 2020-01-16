@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {PostService} from '../../service/post.service';
-import {UserService} from '../../service/user.service';
+import {PostService} from '../../../service/post.service';
+import {UserService} from '../../../service/user.service';
 import {NzMessageService, NzModalService, UploadFile, UploadFilter, UploadXHRArgs} from 'ng-zorro-antd';
 import {TranslateService} from '@ngx-translate/core';
-import {ConfigService} from '../../service/config.service';
-import {CategoryQuality} from '../../model/category';
-import {createConfirm, createErrorConfirm, createSuccessConfirm} from '../../util/modal.util';
-import {Douban} from '../../model/douban';
-import {Imdb} from '../../model/imdb';
+import {ConfigService} from '../../../service/config.service';
+import {CategoryQuality} from '../../../model/category';
+import {createConfirm, createErrorConfirm, createSuccessConfirm} from '../../../util/modal.util';
+import {Douban} from '../../../model/douban';
+import {Imdb} from '../../../model/imdb';
 import {Observable, Observer} from 'rxjs';
-import {TorrentService} from '../../service/torrent.service';
+import {TorrentService} from '../../../service/torrent.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
   templateUrl: './release.component.html',
   styleUrls: ['./release.component.less'],
 })
-export class ReleaseComponent implements OnInit {
+export class TorrentReleaseComponent implements OnInit {
   // 当前检索douban
   douban: Douban = null;
   // 当前检索imdb
@@ -217,7 +217,7 @@ export class ReleaseComponent implements OnInit {
           this.currentCategoryResolution, this.currentCategoryCodec, this.currentCategoryMedium, this.currentCategoryAudio,
           this.currentTitle, this.currentSubtitle, this.info, uploadSeriesArray).subscribe(() => {
           createSuccessConfirm(this.modalService, 'Successful seed release！');
-          this.router.navigate(['/torrents']);
+          this.router.navigate(['/torrent']);
         }, error1 => {
           createErrorConfirm(this.modalService, error1);
         });

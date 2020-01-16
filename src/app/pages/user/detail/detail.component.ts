@@ -6,19 +6,24 @@ import {createErrorMessage, createSuccessMessage} from '../../../util/message.ut
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, Observer} from 'rxjs';
 import {saveUser} from '../../../util/app.util';
+import {ActivatedRoute} from '@angular/router';
+import {User} from '../../../model/user';
 
 @Component({
   selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.less'],
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.less'],
 })
-export class DetailsComponent implements OnInit {
+export class UserDetailComponent implements OnInit {
   copyPasskeySuccessTip: string;
   fileTypeErrorTip: string;
   uploadTheAvatarSuccessfullyTip: string;
+  currentUser: User = null;
+  uidCode: number;
+  isShowFriend = false;
 
   constructor(private clipboardService: ClipboardService, public messageService: NzMessageService,
-              public translateService: TranslateService,
+              public translateService: TranslateService, private routerInfo: ActivatedRoute,
               public userService: UserService) {
   }
 
@@ -61,6 +66,16 @@ export class DetailsComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.uidCode = this.routerInfo.snapshot.queryParams.id;
+    if (this.uidCode) {
+      this.isShowFriend = true;
+      this.userService.getUserById(this.uidCode).subscribe((user) => {
+        this.currentUser = user;
+      });
+    } else {
+      this.isShowFriend = false;
+      this.currentUser = this.userService.user;
+    }
     this.translateService.get('copyPasskeySuccess').subscribe((res: string) => {
       this.copyPasskeySuccessTip = res;
     });

@@ -33,17 +33,17 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.userService.user = null;
+    removeUser();
     if (this.userService.user) {
       this.authService.logout(this.userService.user.token).subscribe(() => {
         this.userService.userChangeEvent.emit(null);
       }, error1 => {
+        console.log(error1);
         createErrorMessage(this.messageService, error1);
       });
-    } else {
-      createErrorMessage(this.messageService, 'token error');
     }
-    this.userService.user = null;
-    removeUser();
+    this.router.navigateByUrl('/auth/login');
   }
 
   showTestMessage() {
