@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MarkdownService} from 'ngx-markdown';
 
 @Component({
   selector: 'app-faq',
@@ -7,20 +8,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FaqComponent implements OnInit {
 
-  constructor() {
+  constructor(private markdownService: MarkdownService,) {
   }
 
   ngOnInit() {
-  }
-
-  onLoadComplete($event: string) {
-    const cardWidth = document.getElementById('faq-card').offsetWidth;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < document.images.length; i++) {
-      const image = document.images.item(i);
-      if (image.width > cardWidth - 32) {
-        image.width = cardWidth - 32;
-      }
-    }
+    this.markdownService.renderer.image = (href: string, title: string, text: string) => {
+      const card = document.getElementById('card');
+      return '<img src="' + href + '" alt="' + text + '" title="' + title + '" style="width: ' + (card.offsetWidth - 50) + 'px">';
+    };
   }
 }

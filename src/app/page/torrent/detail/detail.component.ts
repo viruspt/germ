@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Douban} from '../../../model/douban';
 import {Imdb} from '../../../model/imdb';
@@ -9,13 +9,14 @@ import {createErrorConfirm} from '../../../util/modal.util';
 import {TranslateService} from '@ngx-translate/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {TorrentService} from '../../../service/torrent.service';
+import {MarkdownService} from 'ngx-markdown';
 
 @Component({
   selector: 'app-details',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.less'],
 })
-export class TorrentDetailComponent implements OnInit, AfterViewInit {
+export class TorrentDetailComponent implements OnInit {
   pid: number;
   douban: Douban;
   imdb: Imdb;
@@ -25,6 +26,7 @@ export class TorrentDetailComponent implements OnInit, AfterViewInit {
   constructor(private routerInfo: ActivatedRoute, private translateService: TranslateService,
               private modalService: NzModalService,
               private postService: PostService, private userService: UserService,
+              private markdownService: MarkdownService,
               private torrentService: TorrentService) {
   }
 
@@ -41,17 +43,11 @@ export class TorrentDetailComponent implements OnInit, AfterViewInit {
     this.translateService.get('noSeed').subscribe((res: string) => {
       this.noSeedTip = res;
     });
-  }
 
-  onLoadComplete() {
-    const cardWidth = document.getElementById('detail-card').offsetWidth;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < document.images.length; i++) {
-      const image = document.images.item(i);
-      if (image.width > cardWidth - 32) {
-        image.width = cardWidth - 32;
-      }
-    }
+    this.markdownService.renderer.image = (href: string, title: string, text: string) => {
+      const card = document.getElementById('card');
+      return '<img src="' + href + '" alt="' + text + '" title="' + title + '" style="width: ' + (card.offsetWidth - 50) + 'px">';
+    };
   }
 
   downloadTorrent(tid: number) {
@@ -62,11 +58,4 @@ export class TorrentDetailComponent implements OnInit, AfterViewInit {
     };
     this.torrentService.downloadTorrent(tid, this.userService.user.token, callback);
   }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.onLoadComplete();
-    }, 500);
-  }
-
 }
