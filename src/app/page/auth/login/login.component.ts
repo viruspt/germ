@@ -38,9 +38,7 @@ export class LoginComponent extends AbstractAuth implements OnInit {
         this.validateForm.get('email').value,
         this.validateForm.get('password').value,
         this.validateForm.get('captcha').value).subscribe((user) => {
-        if (this.validateForm.get('remember').value) {
-          saveUser(user);
-        }
+        user.remember = this.validateForm.get('remember').value;
         this.userService.userChangeEvent.emit(user);
       }, error1 => {
         this.changeCaptcha();

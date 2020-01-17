@@ -51,7 +51,7 @@
             </td>
             <td>
               <h4>{{data.title}}</h4>
-              <p>{{data.subtitle | textLen}}</p>
+              <span nz-text nzType="secondary">{{data.subtitle}}</span>
             </td>
             <td>
               <nz-tag>
@@ -76,7 +76,7 @@
             <td>{{ data.created | datetime}}</td>
             <td>
               <button nz-button nzType="default" [routerLink]="'/user/detail'" [queryParams]="{id: data.uid}">
-                {{ data.username | textLen}}
+                {{ data.username}}
               </button>
             </td>
           </tr>
@@ -93,17 +93,24 @@
 
             <td colspan="7">
               <ng-container *ngIf="data.douban">
-                <p>{{'doubanScore' | translate}}: {{data.douban.ratingAverage}}/10
+                <div *ngIf="data.douban.ratingAverage">
+                <span nz-text>{{'doubanScore' | translate}}: <code>{{data.douban.ratingAverage}}</code>/10
                   from {{data.douban.ratingNumRaters}}
-                  users.</p>
-                <p>{{data.douban.summary}}</p>
+                  users.</span>
+                </div>
+                <div *ngIf="data.douban.summary">
+                  <span nz-text>{{data.douban.summary}}</span>
+                </div>
               </ng-container>
               <ng-container *ngIf="!data.douban && data.imdb">
-                <p>{{'imdbScore' | translate}}: {{data.imdb.imdbRating}}/10
+                <div *ngIf="data.imdb.imdbRating">
+                  <span nz-text>{{'imdbScore' | translate}}: <code>{{data.imdb.imdbRating}}</code>/10
                   from {{data.imdb.imdbVotes}}
-                  users.</p>
-                <p>{{data.imdb.plot}}</p>
-                <p>{{data.imdb.plot}}</p>
+                    users.</span>
+                </div>
+                <div *ngIf="data.imdb.plot">
+                  <span nz-text>{{data.imdb.plot}}</span>
+                </div>
               </ng-container>
 
               <div *ngFor="let series of data.seriesList">
@@ -120,31 +127,24 @@
                 <div *ngIf="series.torrentList">
                   <div *ngFor="let torrent of series.torrentList.slice(0,10)">
                     <nz-divider></nz-divider>
-                    <button nz-button nzType="primary"
-                            nz-dropdown [nzDropdownMenu]="torrentMenu">
-                      {{torrent.fileName}}
-                    </button>
-                    <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
-                      <ul nz-menu>
-                        <li nz-menu-item nzDisabled>
-                          {{'torrentSize' | translate}}: {{torrent.fileSize | byte}}
-                        </li>
-                        <nz-divider></nz-divider>
-                        <li nz-menu-item (click)="downloadTorrent(torrent.id)">
-                          <i nz-icon nzType="download" nzTheme="outline"></i>
-                          {{'download' | translate}}
-                        </li>
-                      </ul>
-                    </nz-dropdown-menu>
                     <div>
+                      <p nz-paragraph
+                         nzEllipsis
+                         nzEditable
+                         nzCopyable
+                         nzExpandable
+                         [nzContent]="torrent.fileName"></p>
+                    </div>
+                    <div class="list-torrent-text-item">
+                      <span nz-text> {{'torrentSize' | translate}}: <code>{{torrent.fileSize | byte}}</code></span>
                       <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
                     </div>
-                    <div>
+                    <div class="list-torrent-text-item">
                       <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.upload * 100}}
                         %</code> | <code>D{{torrent.discount.download * 100}}
                         %</code> | <code>S{{torrent.discount.seed * 100}}%</code></span>
                     </div>
-                    <div>
+                    <div class="list-torrent-text-item">
                     <span nz-text>{{'upload' | translate}}: <nz-tag
                       [nzColor]="torrent.uploadCount | tagColor:'peer'">{{torrent.uploadCount}}</nz-tag> | {{'download' | translate}}
                       : <nz-tag
@@ -152,6 +152,9 @@
                       : <nz-tag [nzColor]="torrent.completeCount | tagColor:'peer'">{{torrent.completeCount}}</nz-tag>
                     </span>
                     </div>
+                    <button nz-button nzType="primary" (click)="downloadTorrent(torrent.id)">
+                      {{'downloadTorrent' | translate}}
+                    </button>
                   </div>
                 </div>
               </div>

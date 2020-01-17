@@ -5,7 +5,12 @@
     <div *ngIf="currentPost" class="detail-content">
       <nz-card class="detail-card" id="detail-card">
         <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-          <div><span nz-text><strong>{{currentPost.title}}</strong></span></div>
+          <p nz-paragraph
+             nzEllipsis
+             nzEditable
+             nzCopyable
+             nzExpandable
+             [nzContent]="currentPost.title"></p>
           <span nz-text>{{currentPost.subtitle}}</span>
         </div>
         <nz-divider></nz-divider>
@@ -25,33 +30,53 @@
               <div *ngFor="let torrent of series.torrentList">
                 <nz-divider></nz-divider>
                 <div>
-                  <span nz-text><strong>{{torrent.fileName}}</strong></span>
+                  <p nz-paragraph
+                     nzEllipsis
+                     nzEditable
+                     nzCopyable
+                     nzExpandable
+                     [nzContent]="torrent.fileName"></p>
                 </div>
-                <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="torrentMenu">
-                  {{'downloadTorrent' | translate}}
-                </button>
-                <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
-                  <ul nz-menu>
-                    <li nz-menu-item nzDisabled>
-                      {{'torrentSize' | translate}}: {{torrent.fileSize | byte}}
-                    </li>
-                    <li nz-menu-divider></li>
-                    <li nz-menu-item (click)="downloadTorrent(torrent.id)">
-                      <i nz-icon nzType="download" nzTheme="outline"></i>
-                      {{'download' | translate}}
-                    </li>
-                  </ul>
-                </nz-dropdown-menu>
-                <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
+                <div class="detail-torrent-text-item">
+                  <span nz-text>{{'torrentSize' | translate}}: <code>{{torrent.fileSize | byte}}</code></span>
+                  <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
+                </div>
+                <div class="detail-torrent-text-item">
                 <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.upload * 100}}
                   %</code> | <code>D{{torrent.discount.download * 100}}%</code> | <code>S{{torrent.discount.seed * 100}}
                   %</code></span>
+                </div>
+                <div class="detail-torrent-text-item">
                 <span nz-text>{{'upload' | translate}}: <nz-tag
                   [nzColor]="torrent.uploadCount | tagColor:'peer'">{{torrent.uploadCount}}</nz-tag> | {{'download' | translate}}
                   : <nz-tag
                     [nzColor]="torrent.downloadCount | tagColor:'peer'">{{torrent.downloadCount}}</nz-tag> | {{'complete' | translate}}
                   : <nz-tag [nzColor]="torrent.completeCount | tagColor:'peer'">{{torrent.completeCount}}</nz-tag>
                 </span>
+                </div>
+                <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="torrentMenu">
+                  {{'downloadTorrent' | translate}}
+                </button>
+                <nz-dropdown-menu #torrentMenu="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li nz-menu-item (click)="downloadTorrent(torrent.id)">
+                      <i nz-icon nzType="download" nzTheme="outline"></i>
+                      {{'download' | translate}}
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item nzDisabled>
+                      下载到指定服务器
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item nzDisabled>
+                      购买免费下载
+                    </li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item nzDisabled>
+                      隔空下载
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
               </div>
             </div>
           </div>
@@ -72,34 +97,99 @@
         <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="18">
           <div class="detail-info-content">
             <ng-container *ngIf="douban">
-              <p>{{'title' | translate}}: <span nz-text><code>{{douban.title}}</code></span>
-              <p>别名: <span nz-text><strong>{{douban.altTitle}}</strong></span>
-              <p>
-                <a [href]="'https://douban.com/subject/'+douban.doubanId"
-                   target="_blank">{{'douban' | translate}}ID: {{douban.doubanId}}</a>
-              </p>
-              <p>{{'type' | translate}}: {{douban.movieType}}
-              <p>时间: {{douban.movieDuration}}
-              <p>上映时间: {{douban.pubdate}}
-              <p>国家: {{douban.country}}
-              <p>语言: {{douban.language}}
-              <p>作者: {{douban.author}}
-              <p>演员: {{douban.cast}}
-              <p>标签:
-                <span nz-text><code>{{douban.tags}}</code></span>
-              <p>年份: {{douban.year}}
-              <p>writer: {{douban.writer}}
-              <p>主页: {{douban.website}}
-              <p>{{'doubanScore' | translate}}: <span nz-text><code>{{douban.ratingAverage}}/10
+              <div *ngIf="douban.title">
+                <span nz-text>{{'title' | translate}}: <strong>{{douban.title}}</strong></span>
+              </div>
+              <div *ngIf="douban.altTitle">
+                <span nz-text nzType="secondary">别名: {{douban.altTitle}}</span>
+              </div>
+              <div *ngIf="douban.doubanId">
+                <span nz-text>
+                  <a [href]="'https://douban.com/subject/'+douban.doubanId"
+                     target="_blank">{{'douban' | translate}}ID: {{douban.doubanId}}</a>
+                </span>
+              </div>
+              <div *ngIf="douban.movieType">
+                <span nz-text>{{'type' | translate}}: {{douban.movieType}}</span>
+              </div>
+              <div *ngIf="douban.movieDuration">
+                <span nz-text>时长: {{douban.movieDuration}}</span>
+              </div>
+              <div *ngIf="douban.pubdate">
+                <span nz-text>上映时间: {{douban.pubdate}}</span>
+              </div>
+              <div *ngIf="douban.country">
+                <span nz-text>国家: {{douban.country}}</span>
+              </div>
+              <div *ngIf="douban.language">
+                <span nz-text>语言: {{douban.language}}</span>
+              </div>
+              <div *ngIf="douban.author">
+                <span nz-text>作者: {{douban.author}}</span>
+              </div>
+              <div *ngIf="douban.cast">
+                <span nz-text>演员: {{douban.cast}}</span>
+              </div>
+              <div *ngIf="douban.tags">
+                <span nz-text>标签:<code>{{douban.tags}}</code></span>
+              </div>
+              <div *ngIf="douban.year">
+                <span nz-text>年份: {{douban.year}}</span>
+              </div>
+              <div *ngIf="douban.website">
+                <span nz-text>作家: {{douban.writer}}</span>
+              </div>
+              <div *ngIf="douban.website">
+                <span nz-text>主页: {{douban.website}}</span>
+              </div>
+              <div *ngIf="douban.ratingAverage">
+              <span nz-text>{{'doubanScore' | translate}}: <code>{{douban.ratingAverage}}</code>/10
                 from {{douban.ratingNumRaters}}
-                users</code></span>.</p>
-              <p>{{douban.summary}}</p>
+                users.</span>
+              </div>
+              <div *ngIf="douban.summary">
+                <span nz-text><strong>{{douban.summary}}</strong></span>
+              </div>
             </ng-container>
             <ng-container *ngIf="!douban && imdb">
-              <p>{{'imdbScore' | translate}}: <span nz-text><code>{{imdb.imdbRating}}/10
+              <div *ngIf="imdb.title">
+                <span nz-text>{{'title' | translate}}: <strong>{{imdb.title}}</strong></span>
+              </div>
+              <div *ngIf="imdb.imdbId">
+                <span nz-text>
+                  <a [href]="'https://www.imdb.com/title/tt'+imdb.imdbId"
+                     target="_blank">{{'imdb' | translate}}ID: {{imdb.imdbId}}</a>
+                </span>
+              </div>
+              <div *ngIf="imdb.runtime">
+                <span nz-text>时长: {{imdb.runtime}}</span>
+              </div>
+              <div *ngIf="imdb.released">
+                <span nz-text>上映时间: {{imdb.released}}</span>
+              </div>
+              <div *ngIf="imdb.country">
+                <span nz-text>国家: {{imdb.country}}</span>
+              </div>
+              <div *ngIf="imdb.language">
+                <span nz-text>语言: {{imdb.language}}</span>
+              </div>
+              <div *ngIf="imdb.actors">
+                <span nz-text>演员: {{imdb.actors}}</span>
+              </div>
+              <div *ngIf="imdb.year">
+                <span nz-text>年份: {{imdb.year}}</span>
+              </div>
+              <div *ngIf="imdb.writer">
+                <span nz-text>作家: {{imdb.writer}}</span>
+              </div>
+              <div *ngIf="imdb.imdbRating">
+                <span nz-text>{{'imdbScore' | translate}}: <code>{{imdb.imdbRating}}</code>/10
                 from {{imdb.imdbVotes}}
-                users</code></span>.</p>
-              <p>{{imdb.plot}}</p>
+                  users.</span>
+              </div>
+              <div *ngIf="imdb.plot">
+                <span nz-text><strong>{{imdb.plot}}</strong></span>
+              </div>
             </ng-container>
           </div>
         </div>

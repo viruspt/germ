@@ -4,24 +4,24 @@
     <app-logo></app-logo>
     <div class="wait-table-container">
       <div *ngIf="waitConfig">
-        <p>候选规则：</p>
-        <p>
-          1. 当发布了
-          <nz-tag>{{waitConfig.passWaitLen}}</nz-tag>
-          个种子后直接通过
-        </p>
-        <p>
-          2.
-          <nz-tag>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</nz-tag>
-          则直接通过
-        </p>
-        <p>
-          3. 如果在
-          <nz-tag>{{waitConfig.waitTime}}秒</nz-tag>
-          内没有得到
-          <nz-tag>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</nz-tag>
-          的票数，那么这个种子将会被删除
-        </p>
+        <div class="wait-rule-text-item">
+          <span nz-text>候选规则：</span>
+        </div>
+        <div class="wait-rule-text-item">
+        <span nz-text>
+          1. 当发布了<code>{{waitConfig.passWaitLen}}</code>个种子后直接通过
+        </span>
+        </div>
+        <div class="wait-rule-text-item">
+        <span nz-text>
+          2. <code>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</code>则直接通过
+        </span>
+        </div>
+        <div class="wait-rule-text-item">
+        <span nz-text>
+          3. 如果在<code>{{waitConfig.waitTime}}</code>秒内没有得到<code>赞同票 - 反对票 >= {{waitConfig.waitAgree}}</code>的票数，那么这个种子将会被删除
+        </span>
+        </div>
       </div>
       <nz-table
         class="wait-table"
@@ -87,13 +87,13 @@
             </td>
             <td>
               <h4>{{data.title}}</h4>
-              <p>{{data.subtitle | textLen}}</p>
+              <p>{{data.subtitle}}</p>
             </td>
             <td>{{ data.created | datetime}}</td>
             <td>{{ data.modify | datetime}}</td>
             <td>
               <button nz-button nzType="default">
-                {{ data.username | textLen}}
+                {{ data.username }}
               </button>
             </td>
           </tr>
@@ -110,16 +110,24 @@
 
             <td colspan="6">
               <ng-container *ngIf="data.douban">
-                <p>{{'doubanScore' | translate}}: {{data.douban.ratingAverage}}/10
+                <div *ngIf="data.douban.ratingAverage">
+                <span nz-text>{{'doubanScore' | translate}}: <code>{{data.douban.ratingAverage}}</code>/10
                   from {{data.douban.ratingNumRaters}}
-                  users.</p>
-                <p>{{data.douban.summary}}</p>
+                  users.</span>
+                </div>
+                <div *ngIf="data.douban.summary">
+                  <span nz-text>{{data.douban.summary}}</span>
+                </div>
               </ng-container>
               <ng-container *ngIf="!data.douban && data.imdb">
-                <p>{{'imdbScore' | translate}}: {{data.imdb.imdbRating}}/10
+                <div *ngIf="data.imdb.imdbRating">
+                  <span nz-text>{{'imdbScore' | translate}}: <code>{{data.imdb.imdbRating}}</code>/10
                   from {{data.imdb.imdbVotes}}
-                  users.</p>
-                <p>{{data.imdb.plot}}</p>
+                    users.</span>
+                </div>
+                <div *ngIf="data.imdb.plot">
+                  <span nz-text>{{data.imdb.plot}}</span>
+                </div>
               </ng-container>
             </td>
           </tr>

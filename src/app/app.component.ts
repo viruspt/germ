@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserService} from './service/user.service';
 import {ConfigService} from './service/config.service';
 import {NavigationEnd, Router} from '@angular/router';
-import {ConfigKey, getLanguage, getObj, getUser, removeUser, saveLanguage, saveObj} from './util/app.util';
+import {ConfigKey, getLanguage, getObj, getUser, removeUser, saveLanguage, saveObj, saveUser} from './util/app.util';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +48,9 @@ export class AppComponent implements OnInit {
     this.userService.userChangeEvent.subscribe(user => {
       if (user) {
         this.userService.user = user;
+        if (user.remember) {
+          saveUser(user);
+        }
         this.router.navigate(['/index']);
       } else {
         removeUser();

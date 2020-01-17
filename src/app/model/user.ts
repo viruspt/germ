@@ -16,4 +16,5 @@ export interface User {
   modify: number;
   token: string;
   isSigned: boolean;
+  remember: true;
 }

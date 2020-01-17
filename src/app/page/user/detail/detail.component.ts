@@ -87,6 +87,15 @@ export class UserDetailComponent implements OnInit {
     this.translateService.get('uploadTheAvatarSuccessfully').subscribe((res: string) => {
       this.uploadTheAvatarSuccessfullyTip = res;
     });
+
+    this.userService.get().subscribe((user) => {
+      if (user.remember) {
+        saveUser(user);
+      }
+    }, error1 => {
+      console.log(error1);
+      createErrorMessage(this.messageService, error1);
+    });
   }
 
   copyPasskey() {
