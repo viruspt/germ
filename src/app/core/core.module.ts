@@ -49,8 +49,8 @@ export function createTranslateLoader(http: HttpClient) {
     {
       provide: 'BASE_CONFIG',
       useValue: {
-        baseUrl: 'http://localhost:11111/virus',
-        // baseUrl: 'http://zzyitj.xyz:7290/api'
+        // baseUrl: 'http://localhost:11111/virus',
+        baseUrl: 'http://zzyitj.xyz:7290/virus'
       }
     }
   ],

@@ -10,6 +10,9 @@ export class DatetimePipe implements PipeTransform {
 
   private getDateTime(value: number, index: number): string {
     if (value < this.TIME[index]) {
+      if (value <= 1) {
+        return '刚刚';
+      }
       return Math.round(value * 100) / 100 + ' ' + this.DATE[index];
     } else {
       value = value / this.TIME[index];

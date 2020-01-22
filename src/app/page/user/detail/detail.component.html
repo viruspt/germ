@@ -47,7 +47,11 @@
             </p>
             <p *ngIf="!isShowFriend" nz-tooltip nzTooltipTitle="ip">
               <i class="detail-account-info-icon" nz-icon nzType="environment" nzTheme="outline"></i>
-              <span nz-text nzDisabled>{{currentUser.ip}}</span>
+              <span nz-text><code>{{currentUser.ip}}</code></span>
+            </p>
+            <p nz-tooltip nzTooltipTitle="{{'level' | translate}}">
+              <i class="detail-account-info-icon" nz-icon nzType="rise" nzTheme="outline"></i>
+              <span nz-text><code>{{currentLevel}}</code></span>
             </p>
             <p nz-tooltip nzTooltipTitle="{{'create' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
@@ -76,8 +80,8 @@
                     [nzColor]="'cyan'">{{'exp' | translate}}: {{currentUser.exp}}</nz-tag>
             <nz-tag class="detail-account-data-tag"
                     [nzColor]="'gold'">{{'gold' | translate}}: {{currentUser.gold}}</nz-tag>
-<!--            <nz-tag class="detail-account-data-tag"-->
-<!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{currentUser.diamond}}</nz-tag>-->
+            <!--            <nz-tag class="detail-account-data-tag"-->
+            <!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{currentUser.diamond}}</nz-tag>-->
           </div>
         </nz-card>
       </div>

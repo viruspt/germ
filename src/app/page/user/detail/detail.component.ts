@@ -8,6 +8,7 @@ import {Observable, Observer} from 'rxjs';
 import {saveUser} from '../../../util/app.util';
 import {ActivatedRoute} from '@angular/router';
 import {User} from '../../../model/user';
+import {ConfigService} from '../../../service/config.service';
 
 @Component({
   selector: 'app-details',
@@ -19,12 +20,13 @@ export class UserDetailComponent implements OnInit {
   fileTypeErrorTip: string;
   uploadTheAvatarSuccessfullyTip: string;
   currentUser: User = null;
+  currentLevel: string;
   uidCode: number;
   isShowFriend = false;
 
   constructor(private clipboardService: ClipboardService, public messageService: NzMessageService,
               public translateService: TranslateService, private routerInfo: ActivatedRoute,
-              public userService: UserService) {
+              public userService: UserService, public configService: ConfigService) {
   }
 
   filters: UploadFilter[] = [
@@ -71,10 +73,12 @@ export class UserDetailComponent implements OnInit {
       this.isShowFriend = true;
       this.userService.getUserById(this.uidCode).subscribe((user) => {
         this.currentUser = user;
+        this.currentLevel = this.getUserLevel(this.currentUser.exp);
       });
     } else {
       this.isShowFriend = false;
       this.currentUser = this.userService.user;
+      this.currentLevel = this.getUserLevel(this.currentUser.exp);
     }
     this.translateService.get('copyPasskeySuccess').subscribe((res: string) => {
       this.copyPasskeySuccessTip = res;
@@ -95,10 +99,22 @@ export class UserDetailComponent implements OnInit {
       user.remember = this.userService.user.remember;
       this.userService.user = user;
       this.currentUser = user;
+      this.currentLevel = this.getUserLevel(this.currentUser.exp);
     }, error1 => {
       console.log(error1);
       createErrorMessage(this.messageService, error1);
     });
+  }
+
+  getUserLevel(exp: number): string {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.configService.configUser.levelList.length; i++) {
+      const level = this.configService.configUser.levelList[i];
+      if (exp < level.needExp) {
+        return this.configService.configUser.levelList[i].levelName;
+      }
+    }
+    return this.configService.configUser.levelList[0].levelName;
   }
 
   copyPasskey() {
