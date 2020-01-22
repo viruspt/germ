@@ -31,6 +31,8 @@
   "email": "E-mail",
   "emailErrorTip": "Please input your E-mail!",
   "emailValidErrorTip": "The input is not valid E-mail!",
+  "emailRedundantErrorTip": "The email is redundant!",
+  "noSuchMailboxTip": "No such mailbox!",
   "validating": "Validating...",
   "sex": "Sex",
   "male": "male",
@@ -119,6 +121,6 @@
   "copyPasskeySuccess": "Copy passkey success",
   "fileTypeError": "File type error",
   "uploadTheAvatarSuccessfully": "Upload the avatar successfully",
-  "created": "Created",
-  "modified": "Modified"
+  "create": "Create",
+  "modify": "Modify"
 }

@@ -1,19 +1,20 @@
 export interface User {
-  uid: number;
+  userAuthId: number;
+  create: number;
+  modify: number;
   email: string;
-  username: string;
+  isActivation: boolean;
   passkey: string;
-  sex: boolean;
   uploaded: number;
   downloaded: number;
+  status: number;
+  username: string;
+  sex: boolean;
   gold: number;
-  diamond: number;
   exp: number;
   inviterId: string;
   avatarUrl: string;
   ip: string;
-  created: number;
-  modify: number;
   token: string;
   isSigned: boolean;
   remember: true;

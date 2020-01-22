@@ -71,8 +71,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.configService.noticeArray = [];
         let i = 0;
         for (const notice of noticeArray) {
-          notice.active = i++ === 0;
-          const create = new Date(notice.created);
+          const create = new Date(notice.create);
           const modify = new Date(notice.modify);
           notice.message = `${notice.message}
           \n\n${this.publishedIn}: **${create.toLocaleDateString()} ${create.toLocaleTimeString()}**
@@ -101,15 +100,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.userSignedButton = document.getElementById('user-signed') as HTMLButtonElement;
     // 更新用户信息
-    this.userService.get().subscribe((user) => {
-      this.userService.userChangeEvent.emit(user);
-      if (!this.userService.user.isSigned) {
-        this.userSignedButton.removeAttribute('hidden');
-      }
-    }, error1 => {
-      console.log(error1);
-      createErrorMessage(this.messageService, error1);
-    });
+    // this.userService.get().subscribe((user) => {
+    //   this.userService.userChangeEvent.emit(user);
+    //   if (!this.userService.user.isSigned) {
+    //     this.userSignedButton.removeAttribute('hidden');
+    //   }
+    // }, error1 => {
+    //   console.log(error1);
+    //   createErrorMessage(this.messageService, error1);
+    // });
   }
 
   seeMoreClick(index: number) {

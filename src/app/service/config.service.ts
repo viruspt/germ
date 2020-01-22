@@ -2,7 +2,7 @@ import {EventEmitter, Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Notice} from '../model/notice';
-import {UserConfig} from '../model/user.config';
+import {ConfigUser} from '../model/config.user';
 import {Config} from '../model/config';
 
 @Injectable({
@@ -11,11 +11,11 @@ import {Config} from '../model/config';
 export class ConfigService {
   public firstRun = true;
   public globalConfig: Config;
-  public userConfig: UserConfig;
+  public configUser: ConfigUser;
   public noticeArray: Notice[];
 
   // 用户配置改变
-  userConfigEvent = new EventEmitter<any>();
+  configUserEvent = new EventEmitter<any>();
 
   constructor(private http: HttpClient, @Inject('BASE_CONFIG') private config) {
   }
@@ -25,9 +25,9 @@ export class ConfigService {
     return this.http.get<Config>(url);
   }
 
-  getUserConfig(token: string): Observable<UserConfig> {
+  getUserConfig(token: string): Observable<ConfigUser> {
     const url = `${this.config.baseUrl}/config/user`;
-    return this.http.get<UserConfig>(url, {
+    return this.http.get<ConfigUser>(url, {
       headers: {
         token
       }

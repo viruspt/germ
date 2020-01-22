@@ -1,16 +1,16 @@
 import {User} from '../model/user';
 
-export const ConfigKey = 'config';
+export const ConfigUserKey = 'currentConfigUser';
 export const UserKey = 'currentUser';
 export const LanguageKey = 'currentLanguage';
 export const ThemeKey = 'currentTheme';
 export const TorrentListPageSize = 'currentTorrentListPageSize';
 
-export function saveObj(key: string, data: any): void {
+export function saveObj(key = ConfigUserKey, data: any): void {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-export function getObj(key = ConfigKey): any {
+export function getObj(key = ConfigUserKey): any {
   const json = localStorage.getItem(key);
   if (json && typeof json === 'string') {
     return JSON.parse(json);
@@ -18,7 +18,7 @@ export function getObj(key = ConfigKey): any {
   return null;
 }
 
-export function removeObj(key = ConfigKey): void {
+export function removeObj(key = ConfigUserKey): void {
   localStorage.removeItem(key);
 }
 

@@ -1,7 +1,7 @@
 export interface Notice {
   title: string;
   message: string;
-  active: boolean;
-  created: number;
+  isOpen: boolean;
+  create: number;
   modify: number;
 }

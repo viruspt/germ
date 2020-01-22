@@ -67,7 +67,7 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit() {
     this.uidCode = this.routerInfo.snapshot.queryParams.id;
-    if (this.uidCode && this.uidCode != this.userService.user.uid) {
+    if (this.uidCode && this.uidCode != this.userService.user.userAuthId) {
       this.isShowFriend = true;
       this.userService.getUserById(this.uidCode).subscribe((user) => {
         this.currentUser = user;
@@ -89,9 +89,12 @@ export class UserDetailComponent implements OnInit {
     });
 
     this.userService.get().subscribe((user) => {
-      if (user.remember) {
+      if (this.userService.user.remember) {
         saveUser(user);
       }
+      user.remember = this.userService.user.remember;
+      this.userService.user = user;
+      this.currentUser = user;
     }, error1 => {
       console.log(error1);
       createErrorMessage(this.messageService, error1);

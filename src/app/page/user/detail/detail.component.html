@@ -35,7 +35,7 @@
             <div class="detail-account-title">{{'personalInfo' | translate}}</div>
             <p nz-tooltip nzTooltipTitle="id">
               <i class="detail-account-info-icon" nz-icon nzType="idcard" nzTheme="outline"></i>
-              <span nz-text><code>{{currentUser.uid}}</code></span>
+              <span nz-text><code>{{currentUser.userAuthId}}</code></span>
             </p>
             <p *ngIf="!isShowFriend" nz-tooltip nzTooltipTitle="{{'email' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="mail" nzTheme="outline"></i>
@@ -49,12 +49,12 @@
               <i class="detail-account-info-icon" nz-icon nzType="environment" nzTheme="outline"></i>
               <span nz-text nzDisabled>{{currentUser.ip}}</span>
             </p>
-            <p nz-tooltip nzTooltipTitle="{{'created' | translate}}">
+            <p nz-tooltip nzTooltipTitle="{{'create' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="clock-circle" nzTheme="outline"></i>
-              <span nz-text nzDisabled>{{currentUser.created | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-              <span nz-text><code>{{currentUser.created | datetime}}</code></span>
+              <span nz-text nzDisabled>{{currentUser.create | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+              <span nz-text><code>{{currentUser.create | datetime}}</code></span>
             </p>
-            <p nz-tooltip nzTooltipTitle="{{'modified' | translate}}">
+            <p nz-tooltip nzTooltipTitle="{{'modify' | translate}}">
               <i class="detail-account-info-icon" nz-icon nzType="history" nzTheme="outline"></i>
               <span nz-text nzDisabled>{{currentUser.modify | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
               <span nz-text><code>{{currentUser.modify | datetime}}</code></span>
@@ -76,8 +76,8 @@
                     [nzColor]="'cyan'">{{'exp' | translate}}: {{currentUser.exp}}</nz-tag>
             <nz-tag class="detail-account-data-tag"
                     [nzColor]="'gold'">{{'gold' | translate}}: {{currentUser.gold}}</nz-tag>
-            <nz-tag class="detail-account-data-tag"
-                    [nzColor]="'purple'">{{'diamond' | translate}}: {{currentUser.diamond}}</nz-tag>
+<!--            <nz-tag class="detail-account-data-tag"-->
+<!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{currentUser.diamond}}</nz-tag>-->
           </div>
         </nz-card>
       </div>

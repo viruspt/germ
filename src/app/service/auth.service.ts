@@ -59,7 +59,7 @@ export class AuthService {
    * @param captcha 验证码
    */
   sendResetPassEmail(email: string, captcha: string) {
-    const url = `${this.config.baseUrl}/auth/send_reset_pass_email`;
+    const url = `${this.config.baseUrl}/auth/send/reset/email`;
     return this.http.post(url, {
       email,
       captcha
@@ -68,14 +68,14 @@ export class AuthService {
 
   /**
    * 重置密码api
-   * @param resetPassCode 重置密码认证码
+   * @param code 重置密码认证码
    * @param password 新密码
    * @param captcha 验证码
    */
-  resetPass(resetPassCode: string, password: string, captcha: string) {
-    const url = `${this.config.baseUrl}/auth/reset_pass`;
+  resetPass(code: string, password: string, captcha: string) {
+    const url = `${this.config.baseUrl}/auth/reset/pass`;
     return this.http.post(url, {
-      resetPassCode,
+      code,
       password,
       captcha
     });

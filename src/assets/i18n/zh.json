@@ -31,6 +31,8 @@
   "email": "邮箱",
   "emailErrorTip": "请输入你的邮箱!",
   "emailValidErrorTip": "请输入正确的邮箱!",
+  "emailRedundantErrorTip": "该邮箱已被注册!",
+  "noSuchMailboxTip": "没有该邮箱!",
   "validating": "正在验证...",
   "sex": "性别",
   "male": "男",
@@ -119,6 +121,6 @@
   "copyPasskeySuccess": "复制Passkey成功",
   "fileTypeError": "文件格式错误",
   "uploadTheAvatarSuccessfully": "上传头像成功",
-  "created": "创建于",
-  "modified": "更新于"
+  "create": "创建于",
+  "modify": "更新于"
 }

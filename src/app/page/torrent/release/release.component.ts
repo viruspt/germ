@@ -103,42 +103,42 @@ export class TorrentReleaseComponent implements OnInit {
   }
 
   selectedCategoryNameChange($event: any) {
-    this.configService.userConfig.categoryList.forEach((category, i) => {
-      if (category.name === $event) {
-        this.selectCategoryQuality(i);
-        return;
-      }
-    });
+    // this.configService.configUser.categoryList.forEach((category, i) => {
+    //   if (category.name === $event) {
+    //     this.selectCategoryQuality(i);
+    //     return;
+    //   }
+    // });
   }
 
   private selectCategoryQuality(index: number) {
-    this.configService.userConfig.categoryList.forEach((category, i) => {
-      if (i === index) {
-        this.currentCategoryName = category.name;
-        this.currentCategoryQuality = category.quality;
-        if (category.quality.resolution) {
-          this.currentCategoryResolution = category.quality.resolution.value[0];
-        } else {
-          this.currentCategoryResolution = null;
-        }
-        if (category.quality.codec) {
-          this.currentCategoryCodec = category.quality.codec.value[0];
-        } else {
-          this.currentCategoryCodec = null;
-        }
-        if (category.quality.medium) {
-          this.currentCategoryMedium = category.quality.medium.value[0];
-        } else {
-          this.currentCategoryMedium = null;
-        }
-        if (category.quality.audio) {
-          this.currentCategoryAudio = category.quality.audio.value[0];
-        } else {
-          this.currentCategoryAudio = null;
-        }
-        return;
-      }
-    });
+    // this.configService.configUser.categoryList.forEach((category, i) => {
+    //   if (i === index) {
+    //     this.currentCategoryName = category.name;
+    //     this.currentCategoryQuality = category.quality;
+    //     if (category.quality.resolution) {
+    //       this.currentCategoryResolution = category.quality.resolution.value[0];
+    //     } else {
+    //       this.currentCategoryResolution = null;
+    //     }
+    //     if (category.quality.codec) {
+    //       this.currentCategoryCodec = category.quality.codec.value[0];
+    //     } else {
+    //       this.currentCategoryCodec = null;
+    //     }
+    //     if (category.quality.medium) {
+    //       this.currentCategoryMedium = category.quality.medium.value[0];
+    //     } else {
+    //       this.currentCategoryMedium = null;
+    //     }
+    //     if (category.quality.audio) {
+    //       this.currentCategoryAudio = category.quality.audio.value[0];
+    //     } else {
+    //       this.currentCategoryAudio = null;
+    //     }
+    //     return;
+    //   }
+    // });
   }
 
   retrieval() {
@@ -188,47 +188,47 @@ export class TorrentReleaseComponent implements OnInit {
   }
 
   release() {
-    if (this.currentTitle && this.currentSubtitle && this.info) {
-      if (this.seriesArray.length > 0) {
-        let categoryId = this.configService.userConfig.categoryList[0].id;
-        this.configService.userConfig.categoryList.forEach((category, i) => {
-          if (category.name === this.currentCategoryName) {
-            categoryId = category.id;
-          }
-        });
-        const uploadSeriesArray = [];
-        // tslint:disable-next-line:forin
-        for (const key in this.seriesArray) {
-          if (!this.seriesArray[key].name) {
-            createErrorConfirm(this.modalService, 'Series name can\'t empty！');
-            return;
-          }
-          const torrentIdArray = [];
-          this.seriesArray[key].torrentArray.forEach(torrent => {
-            torrentIdArray.push(torrent.uid);
-          });
-          const s = {
-            name: this.seriesArray[key].name,
-            remarks: this.seriesArray[key].remarks,
-            torrents: torrentIdArray
-          };
-          uploadSeriesArray.push(s);
-        }
-        this.postService.release(this.userService.user.token, this.type, this.currentId, categoryId,
-          this.currentCategoryResolution, this.currentCategoryCodec, this.currentCategoryMedium, this.currentCategoryAudio,
-          this.currentTitle, this.currentSubtitle, this.info, uploadSeriesArray).subscribe(() => {
-          createSuccessConfirm(this.modalService, 'Successful seed release！');
-          this.router.navigate(['/torrent']);
-        }, error1 => {
-          createErrorConfirm(this.modalService, error1);
-        });
-      } else {
-        // createErrorConfirm(this.modalService, 'You haven\'t uploaded the seeds yet！');
-        createErrorConfirm(this.modalService, 'You haven\'t add series yet！');
-      }
-    } else {
-      createErrorConfirm(this.modalService, 'Some parameters cannot be empty.');
-    }
+    // if (this.currentTitle && this.currentSubtitle && this.info) {
+    //   if (this.seriesArray.length > 0) {
+    //     let categoryId = this.configService.configUser.categoryList[0].id;
+    //     this.configService.configUser.categoryList.forEach((category, i) => {
+    //       if (category.name === this.currentCategoryName) {
+    //         categoryId = category.id;
+    //       }
+    //     });
+    //     const uploadSeriesArray = [];
+    //     // tslint:disable-next-line:forin
+    //     for (const key in this.seriesArray) {
+    //       if (!this.seriesArray[key].name) {
+    //         createErrorConfirm(this.modalService, 'Series name can\'t empty！');
+    //         return;
+    //       }
+    //       const torrentIdArray = [];
+    //       this.seriesArray[key].torrentArray.forEach(torrent => {
+    //         torrentIdArray.push(torrent.uid);
+    //       });
+    //       const s = {
+    //         name: this.seriesArray[key].name,
+    //         remarks: this.seriesArray[key].remarks,
+    //         torrents: torrentIdArray
+    //       };
+    //       uploadSeriesArray.push(s);
+    //     }
+    //     this.postService.release(this.userService.user.token, this.type, this.currentId, categoryId,
+    //       this.currentCategoryResolution, this.currentCategoryCodec, this.currentCategoryMedium, this.currentCategoryAudio,
+    //       this.currentTitle, this.currentSubtitle, this.info, uploadSeriesArray).subscribe(() => {
+    //       createSuccessConfirm(this.modalService, 'Successful seed release！');
+    //       this.router.navigate(['/torrent']);
+    //     }, error1 => {
+    //       createErrorConfirm(this.modalService, error1);
+    //     });
+    //   } else {
+    //     // createErrorConfirm(this.modalService, 'You haven\'t uploaded the seeds yet！');
+    //     createErrorConfirm(this.modalService, 'You haven\'t add series yet！');
+    //   }
+    // } else {
+    //   createErrorConfirm(this.modalService, 'Some parameters cannot be empty.');
+    // }
   }
 
   // removeSeries(id: number) {

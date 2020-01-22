@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {createErrorMessage, createSuccessMessage} from '../../util/message.util';
-import {removeUser, saveLanguage} from '../../util/app.util';
+import {removeObj, removeUser, saveLanguage} from '../../util/app.util';
 import {AuthService} from '../../service/auth.service';
 import {NzIconService, NzMessageService} from 'ng-zorro-antd';
 import {UserService} from '../../service/user.service';
@@ -33,8 +33,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.userService.user = null;
-    removeUser();
+    setTimeout(() => {
+      this.userService.user = null;
+      removeObj();
+      removeUser();
+    }, 500);
     if (this.userService.user) {
       this.authService.logout(this.userService.user.token).subscribe(() => {
         this.userService.userChangeEvent.emit(null);

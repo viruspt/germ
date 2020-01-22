@@ -31,8 +31,8 @@
                     [nzColor]="'cyan'">{{'exp' | translate}}: {{userService.user.exp}}</nz-tag>
             <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
                     [nzColor]="'gold'">{{'gold' | translate}}: {{userService.user.gold}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>
+<!--            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"-->
+<!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>-->
           </div>
         </ng-template>
         <ng-template #userInfoActionSetting>
@@ -63,7 +63,7 @@
             <nz-collapse>
               <nz-collapse-panel
                 [nzHeader]="notice.title"
-                [nzActive]="notice.active">
+                [nzActive]="notice.isOpen">
                 <markdown [data]="notice.message"></markdown>
               </nz-collapse-panel>
             </nz-collapse>

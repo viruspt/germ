@@ -3,7 +3,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserService} from './service/user.service';
 import {ConfigService} from './service/config.service';
 import {NavigationEnd, Router} from '@angular/router';
-import {ConfigKey, getLanguage, getObj, getUser, removeUser, saveLanguage, saveObj, saveUser} from './util/app.util';
+import {ConfigUserKey, getLanguage, getObj, getUser, removeUser, saveLanguage, saveObj, saveUser} from './util/app.util';
+import {createErrorMessage} from './util/message.util';
 
 @Component({
   selector: 'app-root',
@@ -28,29 +29,46 @@ export class AppComponent implements OnInit {
     translate.use(lang);
 
     // 初始化config
-    this.configService.userConfig = getObj();
+    this.configService.configUser = getObj();
     // 初始化user
     this.userService.user = getUser();
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        // 如果没获取用户配置才加载
-        if (this.userService.user && this.configService.firstRun) {
-          this.configService.firstRun = false;
-          this.configService.userConfigEvent.emit(null);
-        }
-      }
-    });
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     // 如果没获取用户配置才加载
+    //     if (this.userService.user && this.configService.firstRun) {
+    //       this.configService.firstRun = false;
+    //       this.configService.configUserEvent.emit(null);
+    //     }
+    //   }
+    // });
   }
 
   ngOnInit() {
+    if (this.configService.firstRun) {
+      this.configService.firstRun = false;
+      this.configService.getConfig().subscribe((config) => {
+        this.configService.globalConfig = config;
+        // 如果没有配置就获取配置
+        if (this.userService.user && !this.configService.configUser) {
+          this.configService.configUserEvent.emit(null);
+        } else if (this.userService.user && config.version !== this.configService.configUser.version) {
+          // 如果版本号变了，就更新配置
+          this.configService.configUserEvent.emit(null);
+        }
+      });
+    }
     // 监听user的改变
     this.userService.userChangeEvent.subscribe(user => {
       if (user) {
-        this.userService.user = user;
-        if (user.remember) {
+        if (!this.userService.user) {
+          if (user.remember) {
+            saveUser(user);
+          }
+        } else if (this.userService.user.remember) {
           saveUser(user);
         }
+        this.userService.user = user;
         this.router.navigate(['/index']);
       } else {
         removeUser();
@@ -59,10 +77,10 @@ export class AppComponent implements OnInit {
       }
     });
     // 监听页面的改变，获取用户配置
-    this.configService.userConfigEvent.subscribe(config => {
-      this.configService.getUserConfig(this.userService.user.token).subscribe(userConfig => {
-        saveObj(ConfigKey, userConfig);
-        this.configService.userConfig = userConfig;
+    this.configService.configUserEvent.subscribe(config => {
+      this.configService.getUserConfig(this.userService.user.token).subscribe(configUser => {
+        saveObj(ConfigUserKey, configUser);
+        this.configService.configUser = configUser;
       });
     });
   }

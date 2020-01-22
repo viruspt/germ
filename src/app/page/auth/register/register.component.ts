@@ -21,7 +21,7 @@ export class RegisterComponent extends AbstractAuth implements OnInit {
 
   constructor(public translate: TranslateService, private fb: FormBuilder, private router: Router,
               public modalService: NzModalService, public messageService: NzMessageService,
-              public configService: ConfigService, public authService: AuthService, public userServce: UserService) {
+              public configService: ConfigService, public authService: AuthService, public userService: UserService) {
     super(messageService, configService, authService);
   }
 
@@ -47,9 +47,8 @@ export class RegisterComponent extends AbstractAuth implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.email, Validators.required]],
-      username: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32)],
-        [this.userNameAsyncValidator]],
+      email: [null, [Validators.email, Validators.required], [this.emailAsyncValidator]],
+      username: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32)], [this.userNameAsyncValidator]],
       password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
       confirm: [null, [this.confirmValidator, Validators.minLength(6), Validators.maxLength(32)]],
       sex: ['male', [Validators.required]],
@@ -61,10 +60,26 @@ export class RegisterComponent extends AbstractAuth implements OnInit {
     });
   }
 
+  emailAsyncValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      setTimeout(() => {
+        this.userService.existUserByEmail(control.value).subscribe((exist) => {
+          if (exist) {
+            observer.next({error: true, duplicated: true});
+          } else {
+            observer.next(null);
+          }
+          observer.complete();
+        }, error1 => {
+          observer.next({error: true, duplicated: true});
+        });
+      }, 1000);
+    });
+
   userNameAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
-        this.userServce.existUserByUsername(control.value).subscribe((exist) => {
+        this.userService.existUserByUsername(control.value).subscribe((exist) => {
           if (exist) {
             observer.next({error: true, duplicated: true});
           } else {

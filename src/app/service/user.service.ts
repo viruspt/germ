@@ -21,9 +21,19 @@ export class UserService {
    * @param username 用户名
    */
   existUserByUsername(username: string): Observable<boolean> {
-    const url = `${this.config.baseUrl}/user/exist/${username}`;
+    const url = `${this.config.baseUrl}/user/exist/username/${username}`;
     return this.http.get<boolean>(url);
   }
+
+  /**
+   * 判断邮箱是否存在
+   * @param email 邮箱
+   */
+  existUserByEmail(email: string): Observable<boolean> {
+    const url = `${this.config.baseUrl}/user/exist/email/${email}`;
+    return this.http.get<boolean>(url);
+  }
+
 
   /**
    * 获取自己的用户信息
