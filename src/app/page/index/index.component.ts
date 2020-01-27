@@ -4,6 +4,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {createErrorMessage, createSuccessMessage} from '../../util/message.util';
 import {ConfigService} from '../../service/config.service';
 import {TranslateService} from '@ngx-translate/core';
+import {SiteInfo} from '../../model/SiteInfo';
 
 @Component({
   selector: 'app-index',
@@ -19,6 +20,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   signInSuccessTip: string;
   dayTip: string;
   expTip: string;
+  currentSiteInfo: SiteInfo;
 
   constructor(public translateService: TranslateService, public messageService: NzMessageService,
               public userService: UserService, public configService: ConfigService) {
@@ -82,6 +84,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
         createErrorMessage(this.messageService, error1);
       });
     }
+    this.configService.getSiteInfo(this.userService.user.token).subscribe(info => {
+      this.currentSiteInfo = info;
+    });
   }
 
   signed() {

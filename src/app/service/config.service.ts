@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Notice} from '../model/notice';
 import {ConfigUser} from '../model/config.user';
 import {Config} from '../model/config';
+import {SiteInfo} from '../model/SiteInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,15 @@ export class ConfigService {
   getNotice(token: string): Observable<Notice[]> {
     const url = `${this.config.baseUrl}/config/notice`;
     return this.http.get<Notice[]>(url, {
+      headers: {
+        token
+      }
+    });
+  }
+
+  getSiteInfo(token: string): Observable<SiteInfo> {
+    const url = `${this.config.baseUrl}/config/site/info`;
+    return this.http.get<SiteInfo>(url, {
       headers: {
         token
       }

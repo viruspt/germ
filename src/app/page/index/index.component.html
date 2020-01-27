@@ -10,8 +10,7 @@
               {{'personalData' | translate}}
             </div>
             <li nz-menu-divider></li>
-            <nz-card-meta
-              [nzTitle]="userInfoContent"></nz-card-meta>
+            <nz-card-meta [nzTitle]="userInfoContent"></nz-card-meta>
           </nz-skeleton>
         </nz-card>
         <ng-template #userInfoContent>
@@ -31,8 +30,8 @@
                     [nzColor]="'cyan'">{{'exp' | translate}}: {{userService.user.exp}}</nz-tag>
             <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
                     [nzColor]="'gold'">{{'gold' | translate}}: {{userService.user.gold}}</nz-tag>
-<!--            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"-->
-<!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>-->
+            <!--            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"-->
+            <!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>-->
           </div>
         </ng-template>
         <ng-template #userInfoActionSetting>
@@ -50,9 +49,7 @@
               {{'chatHall' | translate}}
             </div>
             <li nz-menu-divider></li>
-            <nz-card-meta
-              [nzTitle]="empty"
-            ></nz-card-meta>
+            <nz-card-meta [nzTitle]="empty"></nz-card-meta>
           </nz-skeleton>
         </nz-card>
       </div>
@@ -109,11 +106,24 @@
               {{'siteInformation' | translate}}
             </div>
             <li nz-menu-divider></li>
-            <nz-card-meta
-              [nzTitle]="empty"
-            ></nz-card-meta>
+            <nz-card-meta *ngIf="!currentSiteInfo" [nzTitle]="empty"></nz-card-meta>
+            <nz-card-meta *ngIf="currentSiteInfo" [nzTitle]="siteInfoContent"></nz-card-meta>
           </nz-skeleton>
         </nz-card>
+        <ng-template #siteInfoContent>
+          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'green'">{{'totalUser' | translate}}: {{currentSiteInfo.totalUser}}</nz-tag>
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'gold'">{{'notActivationUser' | translate}}: {{currentSiteInfo.notActiveUser}}</nz-tag>
+          </div>
+          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'gold'">{{'warningUser' | translate}}: {{currentSiteInfo.warningUser}}</nz-tag>
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'red'">{{'banUser' | translate}}: {{currentSiteInfo.bangUser}}</nz-tag>
+          </div>
+        </ng-template>
       </div>
 
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
@@ -123,9 +133,7 @@
               {{'friendshipLinks' | translate}}
             </div>
             <li nz-menu-divider></li>
-            <nz-card-meta
-              [nzTitle]="empty"
-            ></nz-card-meta>
+            <nz-card-meta [nzTitle]="empty"></nz-card-meta>
           </nz-skeleton>
         </nz-card>
       </div>

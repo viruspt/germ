@@ -122,5 +122,9 @@
   "fileTypeError": "File type error",
   "uploadTheAvatarSuccessfully": "Upload the avatar successfully",
   "create": "Create",
-  "modify": "Modify"
+  "modify": "Modify",
+  "totalUser": "Registered users",
+  "warningUser": "Warning users",
+  "banUser": "Ban user",
+  "notActivationUser": "User not activated"
 }
