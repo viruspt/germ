@@ -16,7 +16,7 @@ import {MarkdownService} from 'ngx-markdown';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.less'],
 })
-export class TorrentDetailComponent implements OnInit {
+export class PostDetailComponent implements OnInit {
   pid: number;
   douban: Douban;
   imdb: Imdb;

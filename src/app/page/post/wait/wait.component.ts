@@ -14,7 +14,7 @@ import {WaitConfig} from '../../../model/wait.config';
   templateUrl: './wait.component.html',
   styleUrls: ['./wait.component.less'],
 })
-export class TorrentWaitComponent implements OnInit {
+export class PostWaitComponent implements OnInit {
   categoryName = 'wait';
   sortKey: string = null;
   sortValue = true;

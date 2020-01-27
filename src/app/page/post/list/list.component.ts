@@ -18,7 +18,7 @@ import {getObj, saveObj, TorrentListPageSize} from '../../../util/app.util';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less'],
 })
-export class TorrentListComponent implements OnInit {
+export class PostListComponent implements OnInit {
   categoryNameChangeEvent$ = new EventEmitter<any>();
   categoryName: string;
   sortKey: string = null;

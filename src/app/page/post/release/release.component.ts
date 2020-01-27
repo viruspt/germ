@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
   templateUrl: './release.component.html',
   styleUrls: ['./release.component.less'],
 })
-export class TorrentReleaseComponent implements OnInit {
+export class PostReleaseComponent implements OnInit {
   // 当前检索douban
   douban: Douban = null;
   // 当前检索imdb
@@ -204,8 +204,8 @@ export class TorrentReleaseComponent implements OnInit {
     //         return;
     //       }
     //       const torrentIdArray = [];
-    //       this.seriesArray[key].torrentArray.forEach(torrent => {
-    //         torrentIdArray.push(torrent.uid);
+    //       this.seriesArray[key].torrentArray.forEach(post => {
+    //         torrentIdArray.push(post.uid);
     //       });
     //       const s = {
     //         name: this.seriesArray[key].name,
@@ -218,7 +218,7 @@ export class TorrentReleaseComponent implements OnInit {
     //       this.currentCategoryResolution, this.currentCategoryCodec, this.currentCategoryMedium, this.currentCategoryAudio,
     //       this.currentTitle, this.currentSubtitle, this.info, uploadSeriesArray).subscribe(() => {
     //       createSuccessConfirm(this.modalService, 'Successful seed release！');
-    //       this.router.navigate(['/torrent']);
+    //       this.router.navigate(['/post']);
     //     }, error1 => {
     //       createErrorConfirm(this.modalService, error1);
     //     });

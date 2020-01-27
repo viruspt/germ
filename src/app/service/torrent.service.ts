@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {createErrorConfirm} from '../util/modal.util';
 
 @Injectable({
   providedIn: 'root'

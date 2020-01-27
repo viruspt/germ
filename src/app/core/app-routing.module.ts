@@ -7,7 +7,7 @@ const routes: Routes = [
   {path: 'auth', loadChildren: () => import('../page/auth/auth.module').then(m => m.AuthModule)},
   {path: 'index', loadChildren: () => import('../page/index/index.module').then(m => m.IndexModule)},
   {path: 'faq', loadChildren: () => import('../page/faq/faq.module').then(m => m.FaqModule)},
-  {path: 'torrent', loadChildren: () => import('../page/torrent/torrent.module').then(m => m.TorrentModule)},
+  {path: 'post', loadChildren: () => import('../page/post/post.module').then(m => m.PostModule)},
   {path: 'user', loadChildren: () => import('../page/user/user.module').then(m => m.UserModule)},
   {path: '**', component: Page404Component}
 ];
