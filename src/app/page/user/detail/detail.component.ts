@@ -79,6 +79,19 @@ export class UserDetailComponent implements OnInit {
       this.isShowFriend = false;
       this.currentUser = this.userService.user;
       this.currentLevel = this.getUserLevel(this.currentUser.exp);
+
+      this.userService.get().subscribe((user) => {
+        if (this.userService.user.remember) {
+          saveUser(user);
+        }
+        user.remember = this.userService.user.remember;
+        this.userService.user = user;
+        this.currentUser = user;
+        this.currentLevel = this.getUserLevel(this.currentUser.exp);
+      }, error1 => {
+        console.log(error1);
+        createErrorMessage(this.messageService, error1);
+      });
     }
     this.translateService.get('copyPasskeySuccess').subscribe((res: string) => {
       this.copyPasskeySuccessTip = res;
@@ -92,18 +105,6 @@ export class UserDetailComponent implements OnInit {
       this.uploadTheAvatarSuccessfullyTip = res;
     });
 
-    this.userService.get().subscribe((user) => {
-      if (this.userService.user.remember) {
-        saveUser(user);
-      }
-      user.remember = this.userService.user.remember;
-      this.userService.user = user;
-      this.currentUser = user;
-      this.currentLevel = this.getUserLevel(this.currentUser.exp);
-    }, error1 => {
-      console.log(error1);
-      createErrorMessage(this.messageService, error1);
-    });
   }
 
   getUserLevel(exp: number): string {

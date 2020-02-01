@@ -141,10 +141,10 @@ export class PostListComponent implements OnInit {
         post.seriesList.forEach((series: Series) => {
           if (series.torrentList) {
             series.torrentList.forEach((torrent: Torrent) => {
-              uploadCount += torrent.uploadCount;
-              downloadCount += torrent.downloadCount;
-              completeCount += torrent.completeCount;
-              size += torrent.size;
+              uploadCount += torrent.peer.uploadCount;
+              downloadCount += torrent.peer.downloadCount;
+              completeCount += torrent.peer.completeCount;
+              size += torrent.torrentSize;
             });
           }
         });

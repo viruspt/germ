@@ -21,10 +21,10 @@
               {{series.id}}
             </nz-tag>
             <nz-tag nzColor="green" nz-tooltip nzTooltipTitle="series name">
-              {{series.name}}
+              {{series.seriesName}}
             </nz-tag>
-            <nz-tag *ngIf="series.remarks" nzColor="blue" nz-tooltip nzTooltipTitle="series remarks">
-              {{series.remarks}}
+            <nz-tag *ngIf="series.remark" nzColor="blue" nz-tooltip nzTooltipTitle="series remark">
+              {{series.remark}}
             </nz-tag>
             <div *ngIf="series.torrentList">
               <div *ngFor="let torrent of series.torrentList">
@@ -39,19 +39,21 @@
                 </div>
                 <div class="detail-torrent-text-item">
                   <span nz-text>{{'torrentSize' | translate}}: <code>{{torrent.fileSize | byte}}</code></span>
-                  <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
+                  <span nz-text>{{'size' | translate}}: <code>{{torrent.torrentSize | byte}}</code></span>
                 </div>
                 <div class="detail-torrent-text-item">
-                <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.upload * 100}}
-                  %</code> | <code>D{{torrent.discount.download * 100}}%</code> | <code>S{{torrent.discount.seed * 100}}
+                <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.uploading * 100}}
+                  %</code> | <code>D{{torrent.discount.downloading * 100}}
+                  %</code> | <code>S{{torrent.discount.seeding * 100}}
                   %</code></span>
                 </div>
                 <div class="detail-torrent-text-item">
                 <span nz-text>{{'upload' | translate}}: <nz-tag
-                  [nzColor]="torrent.uploadCount | tagColor:'peer'">{{torrent.uploadCount}}</nz-tag> | {{'download' | translate}}
+                  [nzColor]="torrent.peer.uploadCount | tagColor:'peer'">{{torrent.peer.uploadCount}}</nz-tag> | {{'download' | translate}}
                   : <nz-tag
-                    [nzColor]="torrent.downloadCount | tagColor:'peer'">{{torrent.downloadCount}}</nz-tag> | {{'complete' | translate}}
-                  : <nz-tag [nzColor]="torrent.completeCount | tagColor:'peer'">{{torrent.completeCount}}</nz-tag>
+                    [nzColor]="torrent.peer.downloadCount | tagColor:'peer'">{{torrent.peer.downloadCount}}</nz-tag> | {{'complete' | translate}}
+                  : <nz-tag
+                    [nzColor]="torrent.peer.completeCount | tagColor:'peer'">{{torrent.peer.completeCount}}</nz-tag>
                 </span>
                 </div>
                 <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="torrentMenu">
@@ -86,7 +88,7 @@
         <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="6">
           <div class="detail-poster-content">
             <ng-container *ngIf="douban">
-              <img [src]="douban.image" [alt]="douban.title">
+              <img [src]="douban.poster" [alt]="douban.title">
             </ng-container>
 
             <ng-container *ngIf="!douban && imdb">
@@ -100,23 +102,17 @@
               <div *ngIf="douban.title">
                 <span nz-text>{{'title' | translate}}: <strong>{{douban.title}}</strong></span>
               </div>
-              <div *ngIf="douban.altTitle">
-                <span nz-text nzType="secondary">别名: {{douban.altTitle}}</span>
-              </div>
-              <div *ngIf="douban.doubanId">
+              <div *ngIf="douban.id">
                 <span nz-text>
-                  <a [href]="'https://douban.com/subject/'+douban.doubanId"
-                     target="_blank">{{'douban' | translate}}ID: {{douban.doubanId}}</a>
+                  <a [href]="'https://douban.com/subject/'+douban.id"
+                     target="_blank">{{'douban' | translate}}ID: {{douban.id}}</a>
                 </span>
               </div>
-              <div *ngIf="douban.movieType">
-                <span nz-text>{{'type' | translate}}: {{douban.movieType}}</span>
+              <div *ngIf="douban.runtime">
+                <span nz-text>时长: {{douban.runtime}}</span>
               </div>
-              <div *ngIf="douban.movieDuration">
-                <span nz-text>时长: {{douban.movieDuration}}</span>
-              </div>
-              <div *ngIf="douban.pubdate">
-                <span nz-text>上映时间: {{douban.pubdate}}</span>
+              <div *ngIf="douban.released">
+                <span nz-text>上映时间: {{douban.released}}</span>
               </div>
               <div *ngIf="douban.country">
                 <span nz-text>国家: {{douban.country}}</span>
@@ -124,23 +120,14 @@
               <div *ngIf="douban.language">
                 <span nz-text>语言: {{douban.language}}</span>
               </div>
-              <div *ngIf="douban.author">
-                <span nz-text>作者: {{douban.author}}</span>
+              <div *ngIf="douban.writer">
+                <span nz-text>作者: {{douban.writer}}</span>
               </div>
-              <div *ngIf="douban.cast">
-                <span nz-text>演员: {{douban.cast}}</span>
-              </div>
-              <div *ngIf="douban.tags">
-                <span nz-text>标签:<code>{{douban.tags}}</code></span>
+              <div *ngIf="douban.actors">
+                <span nz-text>演员: {{douban.actors}}</span>
               </div>
               <div *ngIf="douban.year">
                 <span nz-text>年份: {{douban.year}}</span>
-              </div>
-              <div *ngIf="douban.website">
-                <span nz-text>作家: {{douban.writer}}</span>
-              </div>
-              <div *ngIf="douban.website">
-                <span nz-text>主页: {{douban.website}}</span>
               </div>
               <div *ngIf="douban.ratingAverage">
               <span nz-text>{{'doubanScore' | translate}}: <code>{{douban.ratingAverage}}</code>/10
@@ -155,10 +142,10 @@
               <div *ngIf="imdb.title">
                 <span nz-text>{{'title' | translate}}: <strong>{{imdb.title}}</strong></span>
               </div>
-              <div *ngIf="imdb.imdbId">
+              <div *ngIf="imdb.id">
                 <span nz-text>
-                  <a [href]="'https://www.imdb.com/title/tt'+imdb.imdbId"
-                     target="_blank">{{'imdb' | translate}}ID: {{imdb.imdbId}}</a>
+                  <a [href]="'https://www.imdb.com/title/tt'+imdb.id"
+                     target="_blank">{{'imdb' | translate}}ID: {{imdb.id}}</a>
                 </span>
               </div>
               <div *ngIf="imdb.runtime">
@@ -173,22 +160,22 @@
               <div *ngIf="imdb.language">
                 <span nz-text>语言: {{imdb.language}}</span>
               </div>
+              <div *ngIf="imdb.writer">
+                <span nz-text>作者: {{imdb.writer}}</span>
+              </div>
               <div *ngIf="imdb.actors">
                 <span nz-text>演员: {{imdb.actors}}</span>
               </div>
               <div *ngIf="imdb.year">
                 <span nz-text>年份: {{imdb.year}}</span>
               </div>
-              <div *ngIf="imdb.writer">
-                <span nz-text>作家: {{imdb.writer}}</span>
-              </div>
-              <div *ngIf="imdb.imdbRating">
-                <span nz-text>{{'imdbScore' | translate}}: <code>{{imdb.imdbRating}}</code>/10
-                from {{imdb.imdbVotes}}
+              <div *ngIf="imdb.ratingAverage">
+                <span nz-text>{{'imdbScore' | translate}}: <code>{{imdb.ratingAverage}}</code>/10
+                from {{imdb.ratingNumRaters}}
                   users.</span>
               </div>
-              <div *ngIf="imdb.plot">
-                <span nz-text><strong>{{imdb.plot}}</strong></span>
+              <div *ngIf="imdb.summary">
+                <span nz-text><strong>{{imdb.summary}}</strong></span>
               </div>
             </ng-container>
           </div>

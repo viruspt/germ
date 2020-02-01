@@ -1,16 +1,16 @@
 import {Discount} from './discount';
+import {Peer} from './peer';
 
 export interface Torrent {
   id: number;
-  uid: number;
+  userAuthId: number;
   fileName: string;
   fileSize: number;
   hash: string;
-  size: number;
+  torrentSize: number;
+  torrentCount: number;
   discount: Discount;
-  created: number;
+  create: number;
   modify: number;
-  uploadCount: number;
-  downloadCount: number;
-  completeCount: number;
+  peer: Peer;
 }

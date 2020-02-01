@@ -12,12 +12,12 @@ export class PostService {
   }
 
   getOne(id: number, token: string): Observable<Post> {
-    const url = `${this.config.baseUrl}/post/${id}`;
+    const url = `${this.config.baseUrl}/post/id/${id}`;
     return this.http.get<Post>(url, {headers: {token}});
   }
 
   list(token: string, pageIndex = 1, pageSize = 10, categoryName,
-       sortKey = null, desc = true, wait = false): Observable<Post[]> {
+       sortKey = null, desc = true, isWait = false): Observable<Post[]> {
     const url = `${this.config.baseUrl}/post/list`;
     return this.http.post<Post[]>(url, {
       pageIndex,
@@ -25,7 +25,7 @@ export class PostService {
       categoryName,
       sortKey,
       desc,
-      wait
+      isWait
     }, {
       headers: {
         token
@@ -33,18 +33,23 @@ export class PostService {
     });
   }
 
-  count(token: string, wait: boolean): Observable<any> {
-    const url = `${this.config.baseUrl}/post/count/${wait}`;
-    return this.http.get<any>(url, {
+  count(token: string, isWait: boolean): Observable<any> {
+    const url = `${this.config.baseUrl}/post/count`;
+    return this.http.post<any>(url, {
+      isWait
+    }, {
       headers: {
         token
       }
     });
   }
 
-  countByCategory(token: string, categoryName: string, wait: boolean): Observable<any> {
-    const url = `${this.config.baseUrl}/post/count/${categoryName}/${wait}`;
-    return this.http.get<any>(url, {
+  countByCategory(token: string, categoryName: string, isWait: boolean): Observable<any> {
+    const url = `${this.config.baseUrl}/post/count`;
+    return this.http.post<any>(url, {
+      categoryName,
+      isWait
+    }, {
       headers: {
         token
       }
@@ -52,20 +57,22 @@ export class PostService {
   }
 
 
-  info(type: string, id: string, token: string): Observable<any> {
-    const url = `${this.config.baseUrl}/post/info/${type}/${id}`;
-    return this.http.get<any>(url, {headers: {token}});
+  info(type: number, id: number, token: string): Observable<any> {
+    const url = `${this.config.baseUrl}/post/info`;
+    return this.http.post<any>(url, {
+      type, id
+    }, {headers: {token}});
   }
 
   release(token: string,
-          idType: string, id: number, categoryId: number,
+          postInfoType: number, postInfoId: number, postCategoryId: number,
           resolution: string, codec: string, medium: string, audio: string,
           title: string, subtitle: string, content: string, series: any) {
     const url = `${this.config.baseUrl}/post`;
     return this.http.post(url, {
-      idType,
-      id,
-      categoryId,
+      postInfoType,
+      postInfoId,
+      postCategoryId,
       resolution,
       codec,
       medium,
@@ -74,6 +81,10 @@ export class PostService {
       subtitle,
       content,
       series
-    }, {headers: {token}});
+    }, {
+      headers: {
+        token
+      }
+    });
   }
 }

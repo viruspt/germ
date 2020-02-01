@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Douban} from '../../../model/douban';
-import {Imdb} from '../../../model/imdb';
 import {Post} from '../../../model/post';
 import {PostService} from '../../../service/post.service';
 import {UserService} from '../../../service/user.service';
@@ -10,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {TorrentService} from '../../../service/torrent.service';
 import {MarkdownService} from 'ngx-markdown';
+import {PostInfo} from '../../../model/post.info';
 
 @Component({
   selector: 'app-details',
@@ -18,8 +17,8 @@ import {MarkdownService} from 'ngx-markdown';
 })
 export class PostDetailComponent implements OnInit {
   pid: number;
-  douban: Douban;
-  imdb: Imdb;
+  douban: PostInfo;
+  imdb: PostInfo;
   currentPost: Post;
   noSeedTip: string;
 

@@ -73,9 +73,9 @@
                 {{getPeerCount(i, 'complete')}}
               </nz-tag>
             </td>
-            <td>{{ data.created | datetime}}</td>
+            <td>{{ data.create | datetime}}</td>
             <td>
-              <button nz-button nzType="default" [routerLink]="'/user/detail'" [queryParams]="{id: data.uid}">
+              <button nz-button nzType="default" [routerLink]="'/user/detail'" [queryParams]="{id: data.userAuthId}">
                 {{ data.username}}
               </button>
             </td>
@@ -84,7 +84,7 @@
             <td></td>
             <td colSpan="3">
               <ng-container *ngIf="data.douban">
-                <img [src]="data.douban.image" [alt]="data.douban.title">
+                <img [src]="data.douban.poster" [alt]="data.douban.title">
               </ng-container>
               <ng-container *ngIf="!data.douban && data.imdb">
                 <img [src]="data.imdb.poster" [alt]="data.imdb.title">
@@ -103,13 +103,13 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="!data.douban && data.imdb">
-                <div *ngIf="data.imdb.imdbRating">
-                  <span nz-text>{{'imdbScore' | translate}}: <code>{{data.imdb.imdbRating}}</code>/10
-                  from {{data.imdb.imdbVotes}}
+                <div *ngIf="data.imdb.ratingAverage">
+                  <span nz-text>{{'imdbScore' | translate}}: <code>{{data.imdb.ratingAverage}}</code>/10
+                  from {{data.imdb.ratingNumRaters}}
                     users.</span>
                 </div>
-                <div *ngIf="data.imdb.plot">
-                  <span nz-text>{{data.imdb.plot}}</span>
+                <div *ngIf="data.imdb.summary">
+                  <span nz-text>{{data.imdb.summary}}</span>
                 </div>
               </ng-container>
 
@@ -119,10 +119,10 @@
                   {{series.id}}
                 </nz-tag>
                 <nz-tag nzColor="green" nz-tooltip nzTooltipTitle="series name">
-                  {{series.name}}
+                  {{series.seriesName}}
                 </nz-tag>
-                <nz-tag *ngIf="series.remarks" nzColor="blue" nz-tooltip nzTooltipTitle="series remarks">
-                  {{series.remarks}}
+                <nz-tag *ngIf="series.remark" nzColor="blue" nz-tooltip nzTooltipTitle="series remarks">
+                  {{series.remark}}
                 </nz-tag>
                 <div *ngIf="series.torrentList">
                   <div *ngFor="let torrent of series.torrentList.slice(0,10)">
@@ -137,19 +137,20 @@
                     </div>
                     <div class="list-torrent-text-item">
                       <span nz-text> {{'torrentSize' | translate}}: <code>{{torrent.fileSize | byte}}</code></span>
-                      <span nz-text>{{'size' | translate}}: <code>{{torrent.size | byte}}</code></span>
+                      <span nz-text>{{'size' | translate}}: <code>{{torrent.torrentSize | byte}}</code></span>
                     </div>
                     <div class="list-torrent-text-item">
-                      <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.upload * 100}}
-                        %</code> | <code>D{{torrent.discount.download * 100}}
-                        %</code> | <code>S{{torrent.discount.seed * 100}}%</code></span>
+                      <span nz-text>{{'discount' | translate}}: <code>U{{torrent.discount.uploading * 100}}
+                        %</code> | <code>D{{torrent.discount.downloading * 100}}
+                        %</code> | <code>S{{torrent.discount.seeding * 100}}%</code></span>
                     </div>
                     <div class="list-torrent-text-item">
                     <span nz-text>{{'upload' | translate}}: <nz-tag
-                      [nzColor]="torrent.uploadCount | tagColor:'peer'">{{torrent.uploadCount}}</nz-tag> | {{'download' | translate}}
+                      [nzColor]="torrent.peer.uploadCount | tagColor:'peer'">{{torrent.peer.uploadCount}}</nz-tag> | {{'download' | translate}}
                       : <nz-tag
-                        [nzColor]="torrent.downloadCount | tagColor:'peer'">{{torrent.downloadCount}}</nz-tag> | {{'complete' | translate}}
-                      : <nz-tag [nzColor]="torrent.completeCount | tagColor:'peer'">{{torrent.completeCount}}</nz-tag>
+                        [nzColor]="torrent.peer.downloadCount | tagColor:'peer'">{{torrent.peer.downloadCount}}</nz-tag> | {{'complete' | translate}}
+                      : <nz-tag
+                        [nzColor]="torrent.peer.completeCount | tagColor:'peer'">{{torrent.peer.completeCount}}</nz-tag>
                     </span>
                     </div>
                     <button nz-button nzType="primary" (click)="downloadTorrent(torrent.id)">

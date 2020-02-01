@@ -16,7 +16,7 @@
           <div class="release-poster">
             <div style="margin: 4px;">
               <ng-container *ngIf="douban">
-                <img [src]="douban.image" [alt]="douban.title">
+                <img [src]="douban.poster" [alt]="douban.title">
               </ng-container>
 
               <ng-container *ngIf="!douban && imdb">
@@ -32,10 +32,10 @@
                 <p>{{douban.summary}}</p>
               </ng-container>
               <ng-container *ngIf="!douban && imdb">
-                <p>{{'imdbScore' | translate}}: {{imdb.imdbRating}}/10
-                  from {{imdb.imdbVotes}}
+                <p>{{'imdbScore' | translate}}: {{imdb.ratingAverage}}/10
+                  from {{imdb.ratingNumRaters}}
                   users.</p>
-                <p>{{imdb.plot}}</p>
+                <p>{{imdb.summary}}</p>
               </ng-container>
             </div>
           </div>
@@ -55,8 +55,8 @@
             <nz-select *ngIf="currentCategoryName" [(ngModel)]="currentCategoryName"
                        (ngModelChange)="selectedCategoryNameChange($event)">
               <nz-option nzDisabled [nzLabel]="'category' | translate"></nz-option>
-<!--              <nz-option *ngFor="let category of configService.configUser.categoryList" [nzValue]="category.name"-->
-<!--                         [nzLabel]="category.name"></nz-option>-->
+              <!--              <nz-option *ngFor="let category of configService.configUser.categoryList" [nzValue]="category.name"-->
+              <!--                         [nzLabel]="category.name"></nz-option>-->
             </nz-select>
 
             <nz-select *ngIf="currentCategoryQuality.resolution" [(ngModel)]="currentCategoryResolution">

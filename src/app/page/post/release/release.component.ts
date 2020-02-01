@@ -5,12 +5,11 @@ import {NzMessageService, NzModalService, UploadFile, UploadFilter, UploadXHRArg
 import {TranslateService} from '@ngx-translate/core';
 import {ConfigService} from '../../../service/config.service';
 import {CategoryQuality} from '../../../model/category';
-import {createConfirm, createErrorConfirm, createSuccessConfirm} from '../../../util/modal.util';
-import {Douban} from '../../../model/douban';
-import {Imdb} from '../../../model/imdb';
+import {createConfirm, createErrorConfirm} from '../../../util/modal.util';
 import {Observable, Observer} from 'rxjs';
 import {TorrentService} from '../../../service/torrent.service';
 import {Router} from '@angular/router';
+import {PostInfo} from '../../../model/post.info';
 
 @Component({
   selector: 'app-torrents',
@@ -19,9 +18,9 @@ import {Router} from '@angular/router';
 })
 export class PostReleaseComponent implements OnInit {
   // 当前检索douban
-  douban: Douban = null;
+  douban: PostInfo = null;
   // 当前检索imdb
-  imdb: Imdb = null;
+  imdb: PostInfo = null;
   current = 0;
   type = 'douban';
   currentId = null;
@@ -148,24 +147,23 @@ export class PostReleaseComponent implements OnInit {
       return;
     }
     if (this.currentId) {
-      let type = this.type;
+      let typeId = 10;
       if (this.type === 'douban') {
         if (this.currentCategoryName === 'Movie') {
-          type = 'douban_movie';
+          typeId = 1;
         } else if (this.currentCategoryName === 'Book') {
-          type = 'douban_book';
+          typeId = 3;
         } else if (this.currentCategoryName === 'Music') {
-          type = 'douban_music';
+          typeId = 2;
         }
       }
-      this.postService.info(type, this.currentId, this.userService.user.token).subscribe(info => {
-        if (type === 'imdb') {
+      this.postService.info(typeId, this.currentId, this.userService.user.token).subscribe(info => {
+        if (typeId === 10) {
           this.imdb = info;
           this.currentTitle = this.imdb.title + '.' + this.imdb.year + '.';
         } else {
           this.douban = info;
           this.currentTitle = this.douban.title + '.' + this.douban.year + '.';
-          this.currentSubtitle = this.douban.altTitle;
         }
         if (this.currentCategoryResolution) {
           this.currentTitle += this.currentCategoryResolution + '.';

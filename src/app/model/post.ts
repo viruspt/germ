@@ -1,22 +1,21 @@
-import {Douban} from './douban';
-import {Imdb} from './imdb';
 import {Series} from './series';
+import {PostInfo} from './post.info';
 
 export interface Post {
   id: number;
-  uid: number;
+  userAuthId: number;
   username: string;
-  seriesList: Series[];
-  douban: Douban;
-  imdb: Imdb;
-  categoryId: number;
   categoryName: string;
+  seriesList: Series[];
+  douban: PostInfo;
+  imdb: PostInfo;
   teamId: number;
   teamName: string;
   pin: number;
   title: string;
   subtitle: string;
+  hot: number;
   content: string;
-  created: number;
+  create: number;
   modify: number;
 }
