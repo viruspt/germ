@@ -123,6 +123,18 @@
             <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
                     [nzColor]="'red'">{{'banUser' | translate}}: {{currentSiteInfo.bangUser}}</nz-tag>
           </div>
+          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'blue'">
+              <i nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
+              {{currentSiteInfo.maleUser}}
+            </nz-tag>
+
+            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
+                    [nzColor]="'pink'">
+              <i nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
+              {{currentSiteInfo.femaleUser}}</nz-tag>
+          </div>
         </ng-template>
       </div>
 

@@ -1,8 +1,8 @@
 export interface Category {
   id: number;
-  name: string;
+  categoryName: string;
   quality: CategoryQuality;
-  description: string;
+  remark: string;
 }
 
 export interface CategoryQuality {

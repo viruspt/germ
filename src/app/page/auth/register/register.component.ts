@@ -32,7 +32,7 @@ export class RegisterComponent extends AbstractAuth implements OnInit {
         this.validateForm.get('email').value,
         this.validateForm.get('password').value,
         this.validateForm.get('username').value,
-        this.validateForm.get('sex').value !== 'male',
+        this.validateForm.get('sex').value === 'male',
         this.validateForm.get('captcha').value).subscribe(() => {
         this.loading = false;
         createSuccessConfirm(this.modalService, this.registerSuccessTip);

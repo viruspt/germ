@@ -18,8 +18,8 @@
             </div>
             <div class="detail-account-username">
               {{currentUser.username}}
-              <i *ngIf="!currentUser.sex" nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
-              <i *ngIf="currentUser.sex" nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
+              <i *ngIf="currentUser.sex" nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
+              <i *ngIf="!currentUser.sex" nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
             </div>
             <nz-upload *ngIf="!isShowFriend"
                        [nzFilter]="filters"

@@ -3,4 +3,6 @@ export interface SiteInfo {
   warningUser: number;
   bangUser: number;
   notActiveUser: number;
+  maleUser: number;
+  femaleUser: number;
 }

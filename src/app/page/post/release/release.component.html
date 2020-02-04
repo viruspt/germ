@@ -55,8 +55,9 @@
             <nz-select *ngIf="currentCategoryName" [(ngModel)]="currentCategoryName"
                        (ngModelChange)="selectedCategoryNameChange($event)">
               <nz-option nzDisabled [nzLabel]="'category' | translate"></nz-option>
-              <!--              <nz-option *ngFor="let category of configService.configUser.categoryList" [nzValue]="category.name"-->
-              <!--                         [nzLabel]="category.name"></nz-option>-->
+                            <nz-option *ngFor="let category of configService.configUser.postCategoryList"
+                                       [nzValue]="category.categoryName"
+                                       [nzLabel]="category.categoryName"></nz-option>
             </nz-select>
 
             <nz-select *ngIf="currentCategoryQuality.resolution" [(ngModel)]="currentCategoryResolution">
