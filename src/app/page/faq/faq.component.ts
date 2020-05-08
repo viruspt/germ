@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MarkdownService} from 'ngx-markdown';
+import {getLanguage} from '../../util/app.util';
 
 @Component({
   selector: 'app-faq',
@@ -16,5 +17,10 @@ export class FaqComponent implements OnInit {
       const card = document.getElementById('card');
       return '<img src="' + href + '" alt="' + text + '" title="' + title + '" style="width: ' + (card.offsetWidth - 50) + 'px">';
     };
+  }
+
+  // 获取当前选择的语言
+  getCurrentLanguage() {
+    return getLanguage();
   }
 }

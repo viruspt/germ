@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Notice} from '../model/notice';
 import {ConfigUser} from '../model/config.user';
 import {Config} from '../model/config';
-import {SiteInfo} from '../model/SiteInfo';
+import {SiteInfo} from '../model/site.info';
 
 @Injectable({
   providedIn: 'root'

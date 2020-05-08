@@ -3,7 +3,7 @@
   <app-logo></app-logo>
   <nz-content>
     <nz-card class="faq-card" id="card">
-      <markdown src="assets/static/wiki/faq.md"></markdown>
+      <markdown [src]="'assets/static/wiki/faq_'+getCurrentLanguage()+'.md'"></markdown>
     </nz-card>
     <nz-anchor class="faq-anchor">
       <nz-link nzHref="#用户信息" nzTitle="{{'userInfo' | translate}}"></nz-link>

@@ -52,23 +52,29 @@ export class AppComponent implements OnInit {
         // 如果没有配置就获取配置
         if (this.userService.user && !this.configService.configUser) {
           this.configService.configUserEvent.emit(null);
+          console.log('获取配置');
         } else if (this.userService.user && config.version !== this.configService.configUser.version) {
           // 如果版本号变了，就更新配置
           this.configService.configUserEvent.emit(null);
+          console.log('如果版本号发生变化，就更新配置');
         }
       });
     }
     // 监听user的改变
     this.userService.userChangeEvent.subscribe(user => {
+      this.userService.user = user;
       if (user) {
+        // 如果当前缓存没有用户
         if (!this.userService.user) {
+          // 如果用户勾选了记住
           if (user.remember) {
             saveUser(user);
           }
         } else if (this.userService.user.remember) {
           saveUser(user);
         }
-        this.userService.user = user;
+        // 登录成功发送获取用户配置事件
+        this.configService.configUserEvent.emit(null);
         this.router.navigate(['/index']);
       } else {
         removeUser();

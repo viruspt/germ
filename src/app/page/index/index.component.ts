@@ -4,7 +4,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {createErrorMessage, createSuccessMessage} from '../../util/message.util';
 import {ConfigService} from '../../service/config.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SiteInfo} from '../../model/SiteInfo';
+import {SiteInfo} from '../../model/site.info';
 
 @Component({
   selector: 'app-index',
