@@ -1,13 +1,16 @@
 <nz-header style="padding: 0px;width: 100%;z-index: 2;">
   <div class="global-header">
+    <!--    返回主页-->
     <div class="global-header-index-action-hover" style="display: inline-flex;">
       <div class="global-header-index-action" [routerLink]="'/index'">
         <i nz-icon [nzIconfont]="'icon-home'"></i>
       </div>
     </div>
 
+    <!--    种子页导航、发布种子等-->
     <div class="global-header-index-action-hover" style="display: inline-flex;">
-      <div class="global-header-index-action" nz-dropdown [nzDropdownMenu]="torrentMenu">
+      <div class="global-header-index-action"
+           nz-dropdown nzTrigger="click" [nzDropdownMenu]="torrentMenu">
         <i nz-icon [nzIconfont]="'icon-bullbasaur'"></i>
       </div>
     </div>
@@ -53,9 +56,10 @@
       </ul>
     </nz-dropdown-menu>
 
+    <!--    帮助页面，规则页面-->
     <div class="global-header-index-action-hover global-header-index-right">
       <div class="global-header-index-action"
-           nz-dropdown [nzDropdownMenu]="helpMenu">
+           nz-dropdown nzTrigger="click" [nzDropdownMenu]="helpMenu">
         <i nz-icon [nzIconfont]="'icon-bangzhuzhongxin'"></i>
       </div>
       <nz-dropdown-menu #helpMenu="nzDropdownMenu">
@@ -70,17 +74,21 @@
           </li>
         </ul>
       </nz-dropdown-menu>
-
+      <!--      用户头像信息等-->
       <div *ngIf="userService.user" class="global-header-index-action"
            nz-dropdown [nzDropdownMenu]="userMenu">
         <nz-avatar *ngIf="userService.user.avatarUrl" [nzSrc]="userService.user.avatarUrl"></nz-avatar>
         <nz-avatar *ngIf="!userService.user.avatarUrl" [nzText]="userService.user.username.substring(0,1)"
                    nzSize="large" [ngStyle]="{ 'background-color': '#f56a00' }"
                    style="vertical-align: middle;"></nz-avatar>
+        <!--        在头像旁边显示昵称，现在是关闭状态-->
         <span class="global-header-avatar-username">{{userService.user.username}}</span>
       </div>
       <nz-dropdown-menu #userMenu="nzDropdownMenu">
         <ul nz-menu>
+          <li nz-menu-item nzDisabled>
+            {{'username' | translate}}: {{userService.user.username}} UID: {{userService.user.userAuthId}}
+          </li>
           <li nz-menu-item [routerLink]="'/user/detail'">
             <i nz-icon nzType="user" nzTheme="outline"></i>
             {{'personalCenter' | translate}}
@@ -97,8 +105,9 @@
         </ul>
       </nz-dropdown-menu>
 
+      <!--      语言设置-->
       <div class="global-header-index-action"
-           nz-dropdown [nzDropdownMenu]="languageMenu">
+           nz-dropdown nzTrigger="click" [nzDropdownMenu]="languageMenu">
         <i class="iconfont" nz-icon [nzIconfont]="'icon-yuyanfanyi'"></i>
       </div>
       <nz-dropdown-menu #languageMenu="nzDropdownMenu">
