@@ -34,6 +34,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## 待修复
 
-- 苹果设备导航栏无法使用
-
 - 用户信息最近更新时间错误

@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'list', component: PostListComponent, canActivate: [IndexGuardService]},
   {path: 'detail', component: PostDetailComponent, canActivate: [IndexGuardService]},
   {path: 'release', component: PostReleaseComponent, canActivate: [IndexGuardService], canDeactivate: [UnsavedGuard]},
-  {path: 'wait', component: PostWaitComponent, canActivate: [IndexGuardService]},
+  // {path: 'wait', component: PostWaitComponent, canActivate: [IndexGuardService]},
 ];
 
 @NgModule({

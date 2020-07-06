@@ -1,8 +1,13 @@
 <div class="index-container">
+  <!--  头部-->
   <app-header></app-header>
+  <!--  内容-->
   <nz-content>
+    <!--    logo-->
     <app-logo></app-logo>
+    <!--    可以滚动的页面-->
     <div nz-row nzGutter="8" nzAlign="middle" nzJustify="space-around" nzType="flex">
+      <!--      个人信息页面，包括了上传下载分享率等等-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card [nzActions]="[userInfoActionSetting]">
           <nz-skeleton [nzActive]="true" [nzLoading]="loading">
@@ -34,6 +39,7 @@
             <!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>-->
           </div>
         </ng-template>
+        <!--        这里是签到，不过现在没用就隐藏了-->
         <ng-template #userInfoActionSetting>
           <button id="user-signed" [hidden]="true" nz-button nzType="primary"
                   [nzLoading]="signedLoading" (click)="signed()">
@@ -41,7 +47,7 @@
           </button>
         </ng-template>
       </div>
-
+      <!--      聊天大厅-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card>
           <nz-skeleton [nzActive]="true" [nzLoading]="loading">
@@ -53,7 +59,7 @@
           </nz-skeleton>
         </nz-card>
       </div>
-
+      <!--公告-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card [nzBordered]="false" [nzBodyStyle]="{'padding': '0px'}">
           <nz-skeleton [nzActive]="true" [nzLoading]="loading" *ngFor="let notice of configService.noticeArray">
@@ -67,7 +73,7 @@
           </nz-skeleton>
         </nz-card>
       </div>
-
+      <!--      热门推荐-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card>
           <div>
@@ -83,7 +89,7 @@
                   <img class="hot-img"
                        src="https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2574029074.jpg" alt="">
                   <button class="hot-img-more" nz-button nzType="primary"
-                          [routerLink]="'/post/detail'" [queryParams]="{id: 56}">{{'seeMore' | translate}}</button>
+                          [routerLink]="'/post/detail'" [queryParams]="{id: 4}">{{'seeMore' | translate}}</button>
                 </div>
                 <div class="hot-douban">
                   <span nz-text>{{'doubanScore' | translate}}: <code>6.3</code>/10 from 160000 user</span>
@@ -91,14 +97,14 @@
                     夏天、阳光，沙滩、海浪，青年消防员雏罂粟港和爱好冲浪的向水日菜子相遇并迅速展开热恋。看似命中注定的这对恋人，却不幸遭遇生死别离。无法接受港已经离世的雏子，某天突然发现，只要唱起属于两个人的那首歌，港就会从水中出现……
                   </span>
                   <button nz-button nzType="primary"
-                          [routerLink]="'/post/detail'" [queryParams]="{id: 56}">{{'seeMore' | translate}}</button>
+                          [routerLink]="'/post/detail'" [queryParams]="{id: 4}">{{'seeMore' | translate}}</button>
                 </div>
               </div>
             </div>
           </nz-carousel>
         </nz-card>
       </div>
-
+      <!--站点信息-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card>
           <nz-skeleton [nzActive]="true" [nzLoading]="loading">
@@ -137,7 +143,7 @@
           </div>
         </ng-template>
       </div>
-
+      <!--      友情链接-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
         <nz-card>
           <nz-skeleton [nzActive]="true" [nzLoading]="loading">
@@ -151,9 +157,10 @@
       </div>
     </div>
   </nz-content>
+  <!--  尾部-->
   <app-footer></app-footer>
 </div>
-
+<!--空信息模板-->
 <ng-template #empty>
   <nz-empty [nzNotFoundContent]="'noData' | translate"></nz-empty>
 </ng-template>

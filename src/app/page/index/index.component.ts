@@ -29,7 +29,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loading = true;
     this.signedLoading = false;
-
+    // 设置多语言的一些参数
     this.translateService.get('publishedIn').subscribe((res: string) => {
       this.publishedIn = res;
     });
@@ -49,7 +49,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     this.translateService.get('exp').subscribe((res: string) => {
       this.expTip = res;
     });
-
+    // 定时切换热门推荐
     setTimeout(() => {
       this.loading = false;
       // 动态设置热门推荐控件的高度
@@ -84,11 +84,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
         createErrorMessage(this.messageService, error1);
       });
     }
+    // 获取站点信息
     this.configService.getSiteInfo(this.userService.user.token).subscribe(info => {
       this.currentSiteInfo = info;
     });
   }
 
+  /**
+   * 签到，不过现在没用
+   */
   signed() {
     this.signedLoading = true;
     this.userService.signed().subscribe(sign => {
