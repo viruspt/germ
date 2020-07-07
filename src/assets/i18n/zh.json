@@ -126,5 +126,6 @@
   "totalUser": "已注册用户",
   "warningUser": "警告用户",
   "banUser": "禁止用户",
-  "notActivationUser": "未激活用户"
+  "notActivationUser": "未激活用户",
+  "expand": "展开"
 }

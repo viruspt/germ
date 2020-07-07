@@ -85,99 +85,101 @@
         </div>
         <nz-divider></nz-divider>
         <div class="detail-title">豆瓣信息</div>
-        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="6">
-          <div class="detail-poster-content">
-            <ng-container *ngIf="douban">
-              <img [src]="douban.poster" [alt]="douban.title">
-            </ng-container>
+        <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
+          <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="6">
+            <div class="detail-poster-content">
+              <ng-container *ngIf="douban">
+                <img [src]="douban.poster" [alt]="douban.title">
+              </ng-container>
 
-            <ng-container *ngIf="!douban && imdb">
-              <img [src]="imdb.poster" [alt]="imdb.title">
-            </ng-container>
+              <ng-container *ngIf="!douban && imdb">
+                <img [src]="imdb.poster" [alt]="imdb.title">
+              </ng-container>
+            </div>
           </div>
-        </div>
-        <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="18">
-          <div class="detail-info-content">
-            <ng-container *ngIf="douban">
-              <div *ngIf="douban.title">
-                <span nz-text>{{'title' | translate}}: <strong>{{douban.title}}</strong></span>
-              </div>
-              <div *ngIf="douban.id">
+          <div class="detail-layout" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="18">
+            <div class="detail-info-content">
+              <ng-container *ngIf="douban">
+                <div *ngIf="douban.title">
+                  <span nz-text>{{'title' | translate}}: <strong>{{douban.title}}</strong></span>
+                </div>
+                <div *ngIf="douban.id">
                 <span nz-text>
                   <a [href]="'https://douban.com/subject/'+douban.id"
                      target="_blank">{{'douban' | translate}}ID: {{douban.id}}</a>
                 </span>
-              </div>
-              <div *ngIf="douban.runtime">
-                <span nz-text>时长: {{douban.runtime}}</span>
-              </div>
-              <div *ngIf="douban.released">
-                <span nz-text>上映时间: {{douban.released}}</span>
-              </div>
-              <div *ngIf="douban.country">
-                <span nz-text>国家: {{douban.country}}</span>
-              </div>
-              <div *ngIf="douban.language">
-                <span nz-text>语言: {{douban.language}}</span>
-              </div>
-              <div *ngIf="douban.writer">
-                <span nz-text>作者: {{douban.writer}}</span>
-              </div>
-              <div *ngIf="douban.actors">
-                <span nz-text>演员: {{douban.actors}}</span>
-              </div>
-              <div *ngIf="douban.year">
-                <span nz-text>年份: {{douban.year}}</span>
-              </div>
-              <div *ngIf="douban.ratingAverage">
+                </div>
+                <div *ngIf="douban.runtime">
+                  <span nz-text>时长: {{douban.runtime}}</span>
+                </div>
+                <div *ngIf="douban.released">
+                  <span nz-text>上映时间: {{douban.released}}</span>
+                </div>
+                <div *ngIf="douban.country">
+                  <span nz-text>国家: {{douban.country}}</span>
+                </div>
+                <div *ngIf="douban.language">
+                  <span nz-text>语言: {{douban.language}}</span>
+                </div>
+                <div *ngIf="douban.writer">
+                  <span nz-text>作者: {{douban.writer}}</span>
+                </div>
+                <div *ngIf="douban.actors">
+                  <span nz-text>演员: {{douban.actors}}</span>
+                </div>
+                <div *ngIf="douban.year">
+                  <span nz-text>年份: {{douban.year}}</span>
+                </div>
+                <div *ngIf="douban.ratingAverage">
               <span nz-text>{{'doubanScore' | translate}}: <code>{{douban.ratingAverage}}</code>/10
                 from {{douban.ratingNumRaters}}
                 users.</span>
-              </div>
-              <div *ngIf="douban.summary">
-                <span nz-text><strong>{{douban.summary}}</strong></span>
-              </div>
-            </ng-container>
-            <ng-container *ngIf="!douban && imdb">
-              <div *ngIf="imdb.title">
-                <span nz-text>{{'title' | translate}}: <strong>{{imdb.title}}</strong></span>
-              </div>
-              <div *ngIf="imdb.id">
+                </div>
+                <div *ngIf="douban.summary">
+                  <span nz-text><strong>{{douban.summary}}</strong></span>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!douban && imdb">
+                <div *ngIf="imdb.title">
+                  <span nz-text>{{'title' | translate}}: <strong>{{imdb.title}}</strong></span>
+                </div>
+                <div *ngIf="imdb.id">
                 <span nz-text>
                   <a [href]="'https://www.imdb.com/title/tt'+imdb.id"
                      target="_blank">{{'imdb' | translate}}ID: {{imdb.id}}</a>
                 </span>
-              </div>
-              <div *ngIf="imdb.runtime">
-                <span nz-text>时长: {{imdb.runtime}}</span>
-              </div>
-              <div *ngIf="imdb.released">
-                <span nz-text>上映时间: {{imdb.released}}</span>
-              </div>
-              <div *ngIf="imdb.country">
-                <span nz-text>国家: {{imdb.country}}</span>
-              </div>
-              <div *ngIf="imdb.language">
-                <span nz-text>语言: {{imdb.language}}</span>
-              </div>
-              <div *ngIf="imdb.writer">
-                <span nz-text>作者: {{imdb.writer}}</span>
-              </div>
-              <div *ngIf="imdb.actors">
-                <span nz-text>演员: {{imdb.actors}}</span>
-              </div>
-              <div *ngIf="imdb.year">
-                <span nz-text>年份: {{imdb.year}}</span>
-              </div>
-              <div *ngIf="imdb.ratingAverage">
+                </div>
+                <div *ngIf="imdb.runtime">
+                  <span nz-text>时长: {{imdb.runtime}}</span>
+                </div>
+                <div *ngIf="imdb.released">
+                  <span nz-text>上映时间: {{imdb.released}}</span>
+                </div>
+                <div *ngIf="imdb.country">
+                  <span nz-text>国家: {{imdb.country}}</span>
+                </div>
+                <div *ngIf="imdb.language">
+                  <span nz-text>语言: {{imdb.language}}</span>
+                </div>
+                <div *ngIf="imdb.writer">
+                  <span nz-text>作者: {{imdb.writer}}</span>
+                </div>
+                <div *ngIf="imdb.actors">
+                  <span nz-text>演员: {{imdb.actors}}</span>
+                </div>
+                <div *ngIf="imdb.year">
+                  <span nz-text>年份: {{imdb.year}}</span>
+                </div>
+                <div *ngIf="imdb.ratingAverage">
                 <span nz-text>{{'imdbScore' | translate}}: <code>{{imdb.ratingAverage}}</code>/10
                 from {{imdb.ratingNumRaters}}
                   users.</span>
-              </div>
-              <div *ngIf="imdb.summary">
-                <span nz-text><strong>{{imdb.summary}}</strong></span>
-              </div>
-            </ng-container>
+                </div>
+                <div *ngIf="imdb.summary">
+                  <span nz-text><strong>{{imdb.summary}}</strong></span>
+                </div>
+              </ng-container>
+            </div>
           </div>
         </div>
         <nz-divider></nz-divider>

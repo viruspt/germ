@@ -126,5 +126,6 @@
   "totalUser": "Registered users",
   "warningUser": "Warning users",
   "banUser": "Ban user",
-  "notActivationUser": "User not activated"
+  "notActivationUser": "User not activated",
+  "expand": "Expand"
 }

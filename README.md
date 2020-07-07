@@ -35,3 +35,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## 待修复
 
 - 用户信息最近更新时间错误
+
+- faq页面必须加id才能导航

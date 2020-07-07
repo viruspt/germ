@@ -29,6 +29,7 @@
               }
             ],
             "styles": [
+              "src/component.less",
               "src/theme.less",
               "src/styles.css"
             ],

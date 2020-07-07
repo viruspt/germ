@@ -6,6 +6,7 @@
       <nz-table
         class="list-table"
         #ajaxTable
+        nzBordered
         nzShowSizeChanger
         nzPaginationPosition="both"
         [nzFrontPagination]="false"
@@ -18,9 +19,10 @@
         (nzPageSizeChange)="searchData(categoryName, true)"
         [nzScroll]="{ x: '1080px' }"
       >
+        <!--        表头-->
         <thead (nzSortChange)="sort($event)" nzSingleSort>
         <tr>
-          <th nzShowExpand></th>
+          <th nzShowExpand>{{'expand' | translate}}</th>
           <th>{{'roofPlacement' | translate}}</th>
           <th>{{'type' | translate}}</th>
           <th nzShowSort nzSortKey="title">{{'title' | translate}}</th>
@@ -29,18 +31,24 @@
           <th><span>{{'download' | translate}}</span></th>
           <th><span>{{'complete' | translate}}</span></th>
           <th nzShowSort nzSortKey="created"><span>{{'publishedIn' | translate}}</span></th>
+          <th nzShowSort nzSortKey="modify"><span>{{'lastUpdate' | translate}}</span></th>
           <th nzShowSort nzSortKey="uid"><span>{{'author' | translate}}</span></th>
         </tr>
         </thead>
+        <!--        body-->
         <tbody>
+        <!--        循环取出每一条数据-->
         <ng-template ngFor let-data [ngForOf]="ajaxTable.data" let-i="index">
           <tr>
-            <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
-            <td>
+            <!--            展开按钮-->
+            <td [nzAlign]="'center'" nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+            <!--            是否置顶图标-->
+            <td [nzAlign]="'center'">
               <i class="list-icon" nz-icon [nzIconfont]="'icon-pin'"
                  *ngFor="let n of (data.pin | numberToArray)"></i>
             </td>
-            <td>
+            <!--            种子类型图标-->
+            <td [nzAlign]="'center'">
               <i class="list-icon" nz-icon [nzIconfont]="'icon-dianying'" *ngIf="data.categoryName == 'Movie'"></i>
               <i class="list-icon" nz-icon [nzIconfont]="'icon-music_icon'" *ngIf="data.categoryName == 'Music'"></i>
               <i class="list-icon" nz-icon [nzIconfont]="'icon-book'" *ngIf="data.categoryName == 'Book'"></i>
@@ -49,39 +57,48 @@
               <i class="list-icon" nz-icon [nzIconfont]="'icon-ruanjian1'"
                  *ngIf="data.categoryName == 'Software'"></i>
             </td>
+            <!--            标题-->
             <td>
               <h4>{{data.title}}</h4>
               <span nz-text nzType="secondary">{{data.subtitle}}</span>
             </td>
-            <td>
+            <!--            大小-->
+            <td [nzAlign]="'center'">
               <nz-tag>
                 {{getPeerCount(i, 'size') | byte}}
               </nz-tag>
             </td>
-            <td>
+            <!--            上传人数-->
+            <td [nzAlign]="'center'">
               <nz-tag [nzColor]="getPeerCount(i, 'upload') | tagColor:'peer'">
                 {{getPeerCount(i, 'upload')}}
               </nz-tag>
             </td>
-            <td>
+            <!--            下载人数-->
+            <td [nzAlign]="'center'">
               <nz-tag [nzColor]="getPeerCount(i, 'download') | tagColor:'peer'">
                 {{getPeerCount(i, 'download')}}
               </nz-tag>
             </td>
-            <td>
+            <!--            完成人数-->
+            <td [nzAlign]="'center'">
               <nz-tag [nzColor]="getPeerCount(i, 'complete') | tagColor:'peer'">
                 {{getPeerCount(i, 'complete')}}
               </nz-tag>
             </td>
-            <td>{{ data.create | datetime}}</td>
-            <td>
+            <!--            创建时间-->
+            <td [nzAlign]="'center'">{{ data.create | datetime}}</td>
+            <!--            更新时间-->
+            <td [nzAlign]="'center'">{{ data.modify | datetime}}</td>
+            <!--            发布人-->
+            <td [nzAlign]="'center'">
               <button nz-button nzType="default" [routerLink]="'/user/detail'" [queryParams]="{id: data.userAuthId}">
                 {{ data.username}}
               </button>
             </td>
           </tr>
           <tr [nzExpand]="mapOfExpandData[data.id]">
-            <td></td>
+            <td colspan="1"></td>
             <td colSpan="3">
               <ng-container *ngIf="data.douban">
                 <img [src]="data.douban.poster" [alt]="data.douban.title">

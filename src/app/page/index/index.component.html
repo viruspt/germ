@@ -15,30 +15,23 @@
               {{'personalData' | translate}}
             </div>
             <li nz-menu-divider></li>
-            <nz-card-meta [nzTitle]="userInfoContent"></nz-card-meta>
+            <div nz-row nzJustify="center" nzAlign="middle">
+              <nz-tag class="user-info-content-tag"
+                      [nzColor]="(userService.user.uploaded | rate: userService.user.downloaded) | tagColor:'rate'">{{'rate' | translate}}
+                : {{userService.user.uploaded | rate: userService.user.downloaded}}</nz-tag>
+              <nz-tag class="user-info-content-tag"
+                      [nzColor]="userService.user.uploaded | tagColor">{{'uploaded' | translate}}
+                : {{userService.user.uploaded | byte}}</nz-tag>
+              <nz-tag class="user-info-content-tag"
+                      [nzColor]="userService.user.downloaded | tagColor">{{'downloaded' | translate}}
+                : {{userService.user.downloaded | byte}}</nz-tag>
+              <nz-tag class="user-info-content-tag"
+                      [nzColor]="'cyan'">{{'exp' | translate}}: {{userService.user.exp}}</nz-tag>
+              <nz-tag class="user-info-content-tag"
+                      [nzColor]="'gold'">{{'gold' | translate}}: {{userService.user.gold}}</nz-tag>
+            </div>
           </nz-skeleton>
         </nz-card>
-        <ng-template #userInfoContent>
-          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="(userService.user.uploaded | rate: userService.user.downloaded) | tagColor:'rate'">{{'rate' | translate}}
-              : {{userService.user.uploaded | rate: userService.user.downloaded}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="userService.user.uploaded | tagColor">{{'uploaded' | translate}}
-              : {{userService.user.uploaded | byte}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="userService.user.downloaded | tagColor">{{'downloaded' | translate}}
-              : {{userService.user.downloaded | byte}}</nz-tag>
-          </div>
-          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'cyan'">{{'exp' | translate}}: {{userService.user.exp}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'gold'">{{'gold' | translate}}: {{userService.user.gold}}</nz-tag>
-            <!--            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"-->
-            <!--                    [nzColor]="'purple'">{{'diamond' | translate}}: {{userService.user.diamond}}</nz-tag>-->
-          </div>
-        </ng-template>
         <!--        这里是签到，不过现在没用就隐藏了-->
         <ng-template #userInfoActionSetting>
           <button id="user-signed" [hidden]="true" nz-button nzType="primary"
@@ -113,35 +106,35 @@
             </div>
             <li nz-menu-divider></li>
             <nz-card-meta *ngIf="!currentSiteInfo" [nzTitle]="empty"></nz-card-meta>
-            <nz-card-meta *ngIf="currentSiteInfo" [nzTitle]="siteInfoContent"></nz-card-meta>
+            <div *ngIf="currentSiteInfo">
+              <div nz-row nzJustify="center" nzAlign="middle">
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'green'">{{'totalUser' | translate}}: {{currentSiteInfo.totalUser}}</nz-tag>
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'gold'">{{'notActivationUser' | translate}}
+                  : {{currentSiteInfo.notActiveUser}}</nz-tag>
+              </div>
+              <div nz-row nzJustify="center" nzAlign="middle">
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'gold'">{{'warningUser' | translate}}: {{currentSiteInfo.warningUser}}</nz-tag>
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'red'">{{'banUser' | translate}}: {{currentSiteInfo.bangUser}}</nz-tag>
+              </div>
+              <div nz-row nzJustify="center" nzAlign="middle">
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'blue'">
+                  <i nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
+                  {{currentSiteInfo.maleUser}}
+                </nz-tag>
+
+                <nz-tag class="user-info-content-tag" nz-col
+                        [nzColor]="'pink'">
+                  <i nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
+                  {{currentSiteInfo.femaleUser}}</nz-tag>
+              </div>
+            </div>
           </nz-skeleton>
         </nz-card>
-        <ng-template #siteInfoContent>
-          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'green'">{{'totalUser' | translate}}: {{currentSiteInfo.totalUser}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'gold'">{{'notActivationUser' | translate}}: {{currentSiteInfo.notActiveUser}}</nz-tag>
-          </div>
-          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'gold'">{{'warningUser' | translate}}: {{currentSiteInfo.warningUser}}</nz-tag>
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'red'">{{'banUser' | translate}}: {{currentSiteInfo.bangUser}}</nz-tag>
-          </div>
-          <div nz-row nzAlign="middle" nzJustify="space-around" nzType="flex">
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'blue'">
-              <i nz-icon nzType="man" nzTheme="outline" style="color: skyblue"></i>
-              {{currentSiteInfo.maleUser}}
-            </nz-tag>
-
-            <nz-tag class="user-info-content-tag" nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8"
-                    [nzColor]="'pink'">
-              <i nz-icon nzType="woman" nzTheme="outline" style="color: pink"></i>
-              {{currentSiteInfo.femaleUser}}</nz-tag>
-          </div>
-        </ng-template>
       </div>
       <!--      友情链接-->
       <div class="index-content-col" nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
