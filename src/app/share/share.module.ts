@@ -53,7 +53,7 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    MarkdownModule,
+    MarkdownModule.forChild(),
     RouterModule,
     // ant.design
     NzSkeletonModule,

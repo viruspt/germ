@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, SecurityContext} from '@angular/core';
 
 import {NZ_I18N, zh_CN} from 'ng-zorro-antd';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -11,11 +11,29 @@ import {AppRoutingModule} from './app-routing.module';
 import {ShareModule} from '../share/share.module';
 import {AuthGuardService} from '../service/auth.guard.service';
 import {IndexGuardService} from '../service/index.guard.service';
-import {MarkdownModule} from 'ngx-markdown';
+import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {UnsavedGuard} from '../service/unsaved.guard.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+// function that returns `MarkedOptions` with renderer override
+export function markedOptionsFactory(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+
+  renderer.blockquote = (text: string) => {
+    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  return {
+    renderer,
+    gfm: true,
+    breaks: false,
+    pedantic: false,
+    smartLists: true,
+    smartypants: false,
+  };
 }
 
 @NgModule({
@@ -35,7 +53,14 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      sanitize: SecurityContext.NONE,
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptionsFactory,
+      },
+    }),
   ],
   exports: [
     AppRoutingModule,
